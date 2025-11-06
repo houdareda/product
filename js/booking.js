@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const dateInput = document.getElementById('bookingDate');
   const timeOptions = Array.from(document.querySelectorAll('.time-option'));
   const langOptions = Array.from(document.querySelectorAll('.lang-option'));
-  const optionRadios = Array.from(document.querySelectorAll('input[name="bookingOption"]'));
+  const optionCards = Array.from(document.querySelectorAll('.option-card'));
   const selectButtons = Array.from(document.querySelectorAll('.option-card .select-option-btn'));
   const totalEl = document.getElementById('bookingTotal');
   const detailsEl = document.getElementById('bookingDetails');
@@ -166,66 +166,49 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Options radios
-  optionRadios.forEach(r => {
-    r.addEventListener('change', () => {
-      if (r.checked) {
-        state.option = r.value;
-        const label = r.closest('.option-card');
-        let title = '';
-        if (label) {
-          const t = label.querySelector('.title');
-          title = t ? t.textContent.trim() : r.value;
-        }
-        const stepEl = document.querySelector('.booking-step[data-step="options"]');
-        setSummary(stepEl, title);
-        goToStep('participants');
-        updateTotal();
-        // Update selected classes and buttons
-        document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-        const card = r.closest('.option-card');
-        if (card) card.classList.add('selected');
-        updateSelectButtons();
-      }
-    });
-  });
+  function selectOption(card){
+    if(!card) return;
+    const opt = card.dataset.option;
+    if(!opt) return;
+    state.option = opt;
+    const t = card.querySelector('.title');
+    const title = t ? t.textContent.trim() : opt;
+    const stepEl = document.querySelector('.booking-step[data-step="options"]');
+    setSummary(stepEl, title);
+    goToStep('participants');
+    updateTotal();
+    updateSelectButtons();
+  }
 
   function updateSelectButtons(){
     document.querySelectorAll('.option-card').forEach(card => {
       const btn = card.querySelector('.select-option-btn');
-      const radio = card.querySelector('input[name="bookingOption"]');
-      if(!btn || !radio) return;
-      if (radio.checked) {
-        btn.textContent = 'Selected';
-        btn.disabled = true;
-        card.classList.add('selected');
-      } else {
-        btn.textContent = 'Select';
-        btn.disabled = false;
-        card.classList.remove('selected');
-      }
+      if(!btn) return;
+      const isSelected = (card.dataset.option === state.option);
+      btn.textContent = isSelected ? 'Selected' : 'Select';
+      btn.disabled = isSelected;
+      card.classList.toggle('selected', isSelected);
     });
   }
 
-  // Select button behavior: choose the option radio
+  // Select button behavior: choose the option card (no radios)
   selectButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const card = btn.closest('.option-card');
-      if(!card) return;
-      const radio = card.querySelector('input[name="bookingOption"]');
-      if(!radio) return;
-      // Check and trigger change
-      if (!radio.checked) {
-        radio.checked = true;
-        radio.dispatchEvent(new Event('change', { bubbles: true }));
-      } else {
-        updateSelectButtons();
-      }
+      selectOption(card);
     });
   });
 
   // Initialize selected UI for the pre-checked option (first one)
+  const initialCard = document.querySelector('.option-card.selected') || optionCards[0];
+  if (initialCard) {
+    state.option = initialCard.dataset.option || state.option;
+    const t = initialCard.querySelector('.title');
+    const title = t ? t.textContent.trim() : state.option;
+    const stepEl = document.querySelector('.booking-step[data-step="options"]');
+    setSummary(stepEl, title);
+  }
   updateSelectButtons();
 
   // Participants counters
@@ -302,14 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  optionRadios.forEach(r => {
-    r.addEventListener('change', () => {
-      // toggle selected banner
-      document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-      const card = r.closest('.option-card');
-      if(card) card.classList.add('selected');
-    });
-  });
+  // Radios removed; selection managed by state.option and button clicks
 
   // Open/Close bindings
   if (bookBtn) {
