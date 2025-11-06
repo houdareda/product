@@ -669,10 +669,11 @@
               <!-- Best Price option: expanded by default with details -->
               <div class="option-card is-best selected" data-option="basic">
                 <div class="option-header">
-                  <div class="badge-corner">Best Price</div>
+                  <div>
+                    <div class="badge-corner">Best Price</div>
                   <div class="option-main">
                     <div class="title">Without Entrance Fees to the Island</div>
-                    <div class="price">€0.00</div>
+                  </div>
                   </div>
                   <div class="option-media">
                     <img class="option-image" src="img/bghero.webp" alt="Option preview" />
@@ -684,7 +685,7 @@
                     <span class="price-badge">Children: €10.00</span>
                   </div>
                   <div class="option-footer">
-                    <button class="select-option-btn" type="button" disabled>Selected</button>
+                    <button class="select-option-btn" type="button" disabled><i class="fas fa-check"></i> Selected</button>
                     <button class="details-toggle" type="button"><i class="fas fa-chevron-down icon-toggle" style="transform: rotate(0deg);"></i> Show Details</button>
                   </div>
                   <div class="option-details">
@@ -698,7 +699,6 @@
                 <div class="option-header">
                   <div class="option-main">
                     <div class="title">With Island Entrance Fees</div>
-                    <div class="price">€4.50</div>
                   </div>
                   <div class="option-media">
                     <img class="option-image" src="img/bghero.webp" alt="Option preview" />
@@ -724,7 +724,6 @@
                 <div class="option-header">
                   <div class="option-main">
                     <div class="title">With Parasailing (10 Minutes)</div>
-                    <div class="price">€18.50</div>
                   </div>
                   <div class="option-media">
                     <img class="option-image" src="img/bghero.webp" alt="Option preview" />
@@ -794,22 +793,45 @@
               <div class="selected-summary"></div>
             </div>
             <div class="step-body addons-list">
+              <!-- Addon: Photo Package -->
               <div class="addon-item" data-addon="photo" data-price="12">
-                <span class="addon-name">Professional Photo Package</span>
-                <span class="addon-price">€12</span>
-                <div class="addon-qty">
-                  <button class="counter-btn minus" type="button">-</button>
-                  <span class="qty-count">0</span>
-                  <button class="counter-btn plus" type="button">+</button>
+                <div class="addon-header">
+                  <div class="addon-info">
+                    <span class="addon-name">Professional Photo Package</span>
+                    <small class="addon-desc">Capture unforgettable moments with professional photos during your tour today.</small>
+                  </div>
+                  <div class="addon-media">
+                    <img class="addon-image" src="img/photo_6813975525858.webp" alt="Photo package" />
+                  </div>
+                </div>
+                <div class="addon-footer">
+                   <p>Per item <span class="addon-price">€12</span></p>
+                  <div class="addon-qty">
+                    <button class="counter-btn minus" type="button">-</button>
+                    <span class="qty-count">0</span>
+                    <button class="counter-btn plus" type="button">+</button>
+                  </div>
                 </div>
               </div>
+
+              <!-- Addon: Protective Goggles -->
               <div class="addon-item" data-addon="goggles" data-price="5">
-                <span class="addon-name">Protective Goggles</span>
-                <span class="addon-price">€5</span>
-                <div class="addon-qty">
-                  <button class="counter-btn minus" type="button">-</button>
-                  <span class="qty-count">0</span>
-                  <button class="counter-btn plus" type="button">+</button>
+                <div class="addon-header">
+                  <div class="addon-info">
+                    <span class="addon-name">Protective Goggles</span>
+                    <small class="addon-desc">Protect your eyes with comfy goggles during adventurous activities safely.</small>
+                  </div>
+                  <div class="addon-media">
+                    <img class="addon-image" src="img/photo_6813975525858.webp" alt="Protective goggles" />
+                  </div>
+                </div>
+                <div class="addon-footer">
+                  <p>Per item <span class="addon-price">€5</span></p>
+                  <div class="addon-qty">
+                    <button class="counter-btn minus" type="button">-</button>
+                    <span class="qty-count">0</span>
+                    <button class="counter-btn plus" type="button">+</button>
+                  </div>
                 </div>
               </div>
             </div>

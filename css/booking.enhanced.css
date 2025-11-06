@@ -42,17 +42,18 @@
 }
 .option-card {
   border-radius: 10px;
-  padding: 20px 24px;
+  padding: 18px 15px;
   background: #fff;
   margin-bottom: 18px;
   position: relative;
-  border: 1px solid #c4c4c4a4;
+  border: 1px solid #d6d6d681;
   overflow: hidden;
     box-shadow: 0 4px 10px rgba(52, 126, 211, 0.048);
 }
 .option-card.selected {
-  box-shadow: 0 4px 14px rgba(52, 126, 211, 0.178);
+  box-shadow: 0 4px 14px rgba(35, 116, 209, 0.425);
   border-color: #335c91;
+  border: 2px solid var(--primary-color);
 }
 .option-card:hover { box-shadow: 0 4px 14px rgba(52, 126, 211, 0.18); }
 
@@ -81,14 +82,14 @@
 .option-card .option-media { flex: 0 0 auto; }
 .option-card .option-image {
   width: 70px;
-  height: 70px;
+  height: 60px;
   object-fit: cover;
   border-radius: 12px;
 }
 .option-card .details-toggle {
   color: var(--primary-color);
   border-radius: 999px;
-  padding: 8px 12px;
+  padding: 8px 4px;
   cursor: pointer;
   font-size: 14px;
   outline: none;
@@ -100,19 +101,27 @@
   font-size: 12px;
 }
 .option-card .select-option-btn {
-  background: var(--primary-color);
-  color: #fff;
+  background: transparent;
+  color: var(--primary-color);
   border-radius: 12px;
   padding: 12px 18px;
   font-weight: 700;
   cursor: pointer;
   border: 1px solid var(--primary-color);
   width: 50%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+.option-card .select-option-btn i{
+  font-size: 18px;
+  font-weight: bold;
 }
 .option-card.selected .select-option-btn,
 .option-card .select-option-btn:disabled {
-  background: #344b80;
-  border-color: #344b80;
+  background: var(--primary-color);
+  border-color: var(--primary-color);
   color: #fff;
   cursor: default;
 }
@@ -173,16 +182,14 @@
   border-bottom: 26px solid transparent;
 }
 .option-card .badge-corner {
-  position: absolute;
-  top: 8px;
-  right: 38px;
   background: #ffe8c7;
   color: #8b5d00;
   font-weight: 700;
   padding: 4px 8px;
   border-radius: 8px;
   font-size: 12px;
-  display: none;
+  width: max-content;
+  margin-bottom: 5px;
 }
 
 .counters .counter-row {
@@ -199,6 +206,47 @@
   border-radius: 12px;
   font-weight: 700;
 }
+
+/* --- Addons enhanced layout --- */
+.addons-list .addon-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border: 1px dashed #e5e7eb;
+  border-radius: 16px;
+  background: #fff;
+}
+.addons-list .addon-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+.addons-list .addon-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.addons-list .addon-name { font-weight: 700; font-size: 16px; }
+.addons-list .addon-desc { color: #6b7280; font-size: 12px; }
+.addons-list .addon-price {
+  font-size: 18px;
+  color: var(--primary-color); font-weight: 700; }
+.addons-list .addon-media { flex: 0 0 auto; }
+.addons-list .addon-image {
+  width: 70px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.addons-list .addon-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.addons-list .addon-qty { gap: 8px; }
 
 @media (min-width: 1051px) {
   .booking-modal {

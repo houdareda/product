@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const btn = card.querySelector('.select-option-btn');
       if(!btn) return;
       const isSelected = (card.dataset.option === state.option);
-      btn.textContent = isSelected ? 'Selected' : 'Select';
+      btn.innerHTML = isSelected ? '<i class="fas fa-check"></i> Selected' : 'Select';
       btn.disabled = isSelected;
       card.classList.toggle('selected', isSelected);
     });
