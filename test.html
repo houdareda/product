@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <style>
+      *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+/* ===== basic section style ===== */
+.destinations {
+  background: #071632;
+  color: #fff;
+  padding: 3rem 1rem;
+  margin: 0 auto;
+  width: 100%;
+  padding: 3rem 20%;
+}
+
+.destinations-head h2 {
+  font-size: 1.8rem;
+  margin-bottom: .5rem;
+}
+
+.destinations-head p {
+  color: rgba(255,255,255,.6);
+  margin-bottom: 1.5rem;
+}
+
+/* tabs */
+.dest-tabs {
+  display: flex;
+  gap: .75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.dest-tab {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.1);
+  color: #fff;
+  padding: .5rem 1.2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: .2s;
+  font-weight: 500;
+}
+
+.dest-tab.active,
+.dest-tab:hover {
+  background: #ff8b1f;
+  border-color: #ff8b1f;
+  color: #071632;
+}
+
+/* panels */
+.dest-panel {
+  display: none;
+}
+
+.dest-panel.active {
+  display: block;
+}
+
+/* cards grid */
+.dest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.dest-card {
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.05);
+  border-radius: 1rem;
+  padding: 1.25rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+  min-height: 215px;
+}
+
+.dest-card h3 {
+  font-size: 1.1rem;
+}
+
+.dest-card p {
+  color: rgba(255,255,255,.6);
+  font-size: .85rem;
+}
+
+.dest-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: .35rem;
+}
+
+.dest-card ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: .85rem;
+  border-bottom: 1px solid transparent;
+  transition: .2s;
+}
+
+.dest-card ul li a:hover {
+  border-bottom: 1px solid rgba(255,255,255,.3);
+}
+
+.dest-more {
+  margin-top: auto;
+  font-size: .8rem;
+  color: #ff8b1f;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* responsive */
+@media (max-width: 600px) {
+  .destinations {
+    border-radius: 1rem;
+  }
+  .dest-tabs {
+    gap: .5rem;
+  }
+  .dest-tab {
+    font-size: .75rem;
+  }
+}
+
+    </style>
+ 
+</head>
+<body>
+
+    <!-- ====== Destinations Section ====== -->
+<!-- ====== Destinations Section ====== -->
+<section class="destinations">
+  <div class="destinations-head">
+    <h2>Where do you want to go?</h2>
+    <p>Choose a destination to explore top tours and activities.</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="dest-tabs">
+    <button class="dest-tab active" data-target="sharm">Sharm El Sheikh</button>
+    <button class="dest-tab" data-target="hurghada">Hurghada</button>
+    <button class="dest-tab" data-target="cairo">Cairo</button>
+    <button class="dest-tab" data-target="upper">Luxor & Aswan</button>
+  </div>
+
+  <!-- Content Wrapper -->
+  <div class="dest-content">
+
+    <!-- Sharm -->
+    <div class="dest-panel active" id="sharm">
+      <div class="dest-grid">
+        <article class="dest-card">
+          <h3>Sea Trips</h3>
+          <p>Snorkeling, Ras Mohamed, Tiran Island.</p>
+          <ul>
+            <li><a href="#">Snorkeling in Sharm</a></li>
+            <li><a href="#">Ras Mohamed Boat Trip</a></li>
+            <li><a href="#">Tiran Island Cruise</a></li>
+          </ul>
+          <a href="#" class="dest-more">View all</a>
+        </article>
+
+        <article class="dest-card">
+          <h3>Desert & Safari</h3>
+          <p>Quad bikes, Bedouin dinner, Dahab trips.</p>
+          <ul>
+            <li><a href="#">Sharm Desert Safari</a></li>
+            <li><a href="#">Blue Hole – Dahab</a></li>
+            <li><a href="#">Bedouin Show & Dinner</a></li>
+          </ul>
+          <a href="#" class="dest-more">View all</a>
+        </article>
+
+        <article class="dest-card">
+          <h3>City Highlights</h3>
+          <p>Old Market, Al Sahaba Mosque.</p>
+          <ul>
+            <li><a href="#">Old Market Sharm</a></li>
+            <li><a href="#">Al Sahaba Mosque</a></li>
+          </ul>
+          <a href="#" class="dest-more">All Sharm tours</a>
+        </article>
+      </div>
+    </div>
+
+    <!-- Hurghada -->
+    <div class="dest-panel" id="hurghada">
+      <div class="dest-grid">
+        <article class="dest-card">
+          <h3>Boat & Islands</h3>
+          <p>Dolphin House, Giftun, Orange Bay.</p>
+          <ul>
+            <li><a href="#">Dolphin House Hurghada</a></li>
+            <li><a href="#">Giftun Island</a></li>
+            <li><a href="#">Orange Bay</a></li>
+          </ul>
+          <a href="#" class="dest-more">View all</a>
+        </article>
+        <article class="dest-card">
+          <h3>Family Activities</h3>
+          <p>Grand Aquarium, Hurghada Museum.</p>
+          <ul>
+            <li><a href="#">Hurghada Grand Aquarium</a></li>
+            <li><a href="#">Hurghada Museum</a></li>
+          </ul>
+          <a href="#" class="dest-more">All Hurghada tours</a>
+        </article>
+      </div>
+    </div>
+
+    <!-- Cairo -->
+    <div class="dest-panel" id="cairo">
+      <div class="dest-grid">
+        <article class="dest-card">
+          <h3>Cairo Day Tours</h3>
+          <p>Museum, Khan El Khalili, Citadel.</p>
+          <ul>
+            <li><a href="#">Egyptian Museum</a></li>
+            <li><a href="#">Khan El Khalili</a></li>
+            <li><a href="#">Cairo Citadel Tour</a></li>
+          </ul>
+          <a href="#" class="dest-more">All Cairo tours</a>
+        </article>
+        <article class="dest-card">
+          <h3>From Cairo</h3>
+          <p>Luxor or Alexandria in 1 day.</p>
+          <ul>
+            <li><a href="#">Luxor Day Trip from Cairo</a></li>
+            <li><a href="#">Alexandria Day Trip</a></li>
+          </ul>
+          <a href="#" class="dest-more">See more</a>
+        </article>
+      </div>
+    </div>
+
+    <!-- Luxor & Aswan -->
+    <div class="dest-panel" id="upper">
+      <div class="dest-grid">
+        <article class="dest-card">
+          <h3>Luxor Highlights</h3>
+          <p>Karnak, Valley of the Kings, Hatshepsut.</p>
+          <ul>
+            <li><a href="#">Luxor Travel Guide</a></li>
+            <li><a href="#">Karnak Temple</a></li>
+            <li><a href="#">Valley of the Kings</a></li>
+          </ul>
+          <a href="#" class="dest-more">All Luxor tours</a>
+        </article>
+        <article class="dest-card">
+          <h3>Aswan Tours</h3>
+          <p>Philae Temple, High Dam, Abu Simbel.</p>
+          <ul>
+            <li><a href="#">Philae Temple</a></li>
+            <li><a href="#">Abu Simbel Tour</a></li>
+          </ul>
+          <a href="#" class="dest-more">All Aswan tours</a>
+        </article>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ===== JS للتبديل بين التابات ===== -->
+<script>
+  const tabs = document.querySelectorAll('.dest-tab');
+  const panels = document.querySelectorAll('.dest-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // remove active
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+
+      // add active
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.target).classList.add('active');
+    });
+  });
+</script>
+
+    
+</body>
+</html>
