@@ -47,6 +47,11 @@
   margin-bottom: 12px;
     position: relative;
   border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+.option-card.selected {
+  border-color: #335c91;
+  box-shadow: 0 4px 14px rgba(52, 126, 211, 0.18);
 }
 .option-card:hover,
 .option-card:has(input:checked) {
@@ -60,65 +65,91 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  width: 100%;
 }
+.option-card .option-main{
+  width: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+} 
 .option-card .option-main .title {
   font-weight: 700;
 }
 .option-card .option-main .price {
-  color: #2563eb;
+  color: var(--primary-color);
+  font-size: 16px;
+  font-weight: 700;
 }
 .option-card .details-toggle {
-  border: 1px solid #d1d5db;
-  background: #fff;
-  color: #111;
+  color: var(--primary-color);
   border-radius: 999px;
   padding: 8px 12px;
   cursor: pointer;
+  font-size: 14px;
+  outline: none;
+  border: none;
+  background: transparent;
+}
+.option-card .details-toggle i{
+  color: var(--primary-color);
+  font-size: 12px;
+}
+.option-card .select-option-btn {
+  border: 1px solid #335c91;
+  background: var(--bg-soft-color);
+  color: var(--primary-color);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+}
+.option-card.selected .select-option-btn,
+.option-card .select-option-btn:disabled {
+  background: #344b80;
+  border-color: #344b80;
+  color: #fff;
+  cursor: default;
 }
 .option-card.expanded .details-toggle {
-  background: #ecfdf5;
+  background: var(--bg-soft-color);
   border-color: #335c91;
-  color: #065f46;
+  color: var(--primary-color);
 }
 .option-card .option-body {
+  margin-top: 10px;
+  width: 100%;
+}
+.option-card .option-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
   margin-top: 10px;
 }
 .option-card .price-badges {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 .option-card .price-badge {
   display: inline-block;
   background: #f3f4f6;
-  color: #065f46;
+  color: var(--primary-color);
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: 5px;
   padding: 8px 12px;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12px;
 }
-.option-card .selection-banner {
-  margin: 12px 0;
-}
-.option-card .selected-pill {
-  display: none;
-  width: 100%;
-  background: #344b80;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 16px;
-  font-weight: 700;
-}
-.option-card.selected .selected-pill {
-  display: block;
-}
+/* Removed selected-pill display; using border highlight + button state instead */
 .option-card .option-details {
   display: none;
   border-left: 3px solid #335c91;
-  background: #f8fffb;
-  border-radius: 10px;
+  background: var(--bg-soft-color);
+  border-radius: 0 10px 10px 0;
   padding: 10px 12px;
   color: #374151;
 }
@@ -149,8 +180,13 @@
 }
 
 .counters .counter-row {
-  gap: 12px;
+  gap: 8px;
   border-radius: 14px;
+}
+.counters .btns_counter{
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 .confirm-booking-btn {
   padding: 14px 18px;

@@ -668,7 +668,7 @@
             </div>
             <div class="step-body options-list">
               <!-- Best Price option: expanded by default with details -->
-              <label class="option-card expanded is-best">
+              <label class="option-card is-best selected">
                 <input type="radio" name="bookingOption" value="basic" checked />
                 <div class="option-header">
                   <div class="badge-corner">Best Price</div>
@@ -676,15 +676,15 @@
                     <div class="title">Without Entrance Fees to the Island</div>
                     <div class="price">€0.00</div>
                   </div>
-                  <button class="details-toggle" type="button">Hide Details</button>
                 </div>
                 <div class="option-body">
                   <div class="price-badges">
                     <span class="price-badge">Adults: €17.50</span>
                     <span class="price-badge">Children: €10.00</span>
                   </div>
-                  <div class="selection-banner">
-                    <button class="selected-pill" type="button" disabled>Selected</button>
+                  <div class="option-footer">
+                    <button class="select-option-btn" type="button" disabled>Selected</button>
+                    <button class="details-toggle" type="button"><i class="fas fa-chevron-down icon-toggle" style="transform: rotate(0deg);"></i> Show Details</button>
                   </div>
                   <div class="option-details">
                     Join our Giftun Island Tour, where you can enjoy snorkeling and savor a delicious buffet lunch. Please note that the island entrance fee is not included.
@@ -700,15 +700,15 @@
                     <div class="title">With Island Entrance Fees</div>
                     <div class="price">€4.50</div>
                   </div>
-                  <button class="details-toggle" type="button">Show Details</button>
                 </div>
                 <div class="option-body">
                   <div class="price-badges">
                     <span class="price-badge">Adults: €17.50</span>
                     <span class="price-badge">Children: €10.00</span>
                   </div>
-                  <div class="selection-banner">
-                    <button class="selected-pill" type="button" disabled>Selected</button>
+                  <div class="option-footer">
+                    <button class="select-option-btn" type="button">Select</button>
+                    <button class="details-toggle" type="button"><i class="fas fa-chevron-down icon-toggle" style="transform: rotate(0deg);"></i> Show Details</button>
                   </div>
                   <div class="option-details">
                     Includes the island entrance fee in your total for a seamless experience.
@@ -724,15 +724,15 @@
                     <div class="title">With Parasailing (10 Minutes)</div>
                     <div class="price">€18.50</div>
                   </div>
-                  <button class="details-toggle" type="button">Show Details</button>
                 </div>
                 <div class="option-body">
                   <div class="price-badges">
                     <span class="price-badge">Adults: €17.50</span>
                     <span class="price-badge">Children: €10.00</span>
                   </div>
-                  <div class="selection-banner">
-                    <button class="selected-pill" type="button" disabled>Selected</button>
+                  <div class="option-footer">
+                    <button class="select-option-btn" type="button">Select</button>
+                    <button class="details-toggle" type="button"><i class="fas fa-chevron-down icon-toggle" style="transform: rotate(0deg);"></i> Show Details</button>
                   </div>
                   <div class="option-details">
                     Add a thrilling 10-minute parasailing ride to your tour.
@@ -743,7 +743,7 @@
           </div>
 
           <!-- Step: Participants -->
-          <div class="booking-step" data-step="participants" data-noauto="true">
+          <div class="booking-step twohead" data-step="participants" data-noauto="true">
             <div class="step-header">
               <div class="title-wrap">
                 <i class="fas fa-users"></i>
@@ -754,27 +754,33 @@
             <div class="step-body counters">
               <div class="counter-row" data-type="adult">
                 <span class="label">Adults (12+ years)</span>
-                <button class="counter-btn minus" type="button">-</button>
+               <div class="btns_counter">
+                 <button class="counter-btn minus" type="button">-</button>
                 <span class="count">1</span>
                 <button class="counter-btn plus" type="button">+</button>
+               </div>
               </div>
               <div class="counter-row" data-type="child">
                 <span class="label">Children (3–11 years)</span>
-                <button class="counter-btn minus" type="button">-</button>
+                <div class="btns_counter">
+                  <button class="counter-btn minus" type="button">-</button>
                 <span class="count">0</span>
                 <button class="counter-btn plus" type="button">+</button>
+                </div>
               </div>
               <div class="counter-row" data-type="infant">
                 <span class="label">Infants (0–2 years)</span>
-                <button class="counter-btn minus" type="button">-</button>
+               <div class="btns_counter">
+                  <button class="counter-btn minus" type="button">-</button>
                 <span class="count">0</span>
                 <button class="counter-btn plus" type="button">+</button>
+               </div>
               </div>
             </div>
           </div>
 
           <!-- Step: Addons -->
-          <div class="booking-step" data-step="addons" data-sticky="true">
+          <div class="booking-step twohead" data-step="addons" data-sticky="true">
             <div class="step-header">
               <div class="title-wrap">
                 <i class="fas fa-plus-circle"></i>
@@ -794,11 +800,11 @@
 
           <!-- Summary -->
           <div class="booking-summary">
+            <div id="bookingDetails" class="summary-details"></div>
             <div class="summary-line">
               <span>Total</span>
               <strong id="bookingTotal">€17.50</strong>
             </div>
-            <div id="bookingDetails" class="summary-details"></div>
             <button class="confirm-booking-btn" type="button">Confirm Booking</button>
           </div>
         </div>

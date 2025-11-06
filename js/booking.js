@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const timeOptions = Array.from(document.querySelectorAll('.time-option'));
   const langOptions = Array.from(document.querySelectorAll('.lang-option'));
   const optionRadios = Array.from(document.querySelectorAll('input[name="bookingOption"]'));
+  const selectButtons = Array.from(document.querySelectorAll('.option-card .select-option-btn'));
   const totalEl = document.getElementById('bookingTotal');
   const detailsEl = document.getElementById('bookingDetails');
 
@@ -79,7 +80,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (next) {
       next.classList.remove('collapsed');
       next.classList.add('active');
-      next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (typeof window.smoothOffsetScroll === 'function') {
+        const modal = document.getElementById('bookingModal');
+        window.smoothOffsetScroll(modal, next);
+      } else {
+        next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   }
 
@@ -90,14 +96,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const total = base + optionFee + addonsFee;
     if (totalEl) totalEl.textContent = `€${total.toFixed(2)}`;
 
-    const det = [];
-    if (state.date) det.push(`Date: ${state.date}`);
-    if (state.time) det.push(`Time: ${state.time}`);
-    if (state.language) det.push(`Language: ${state.language}`);
-    det.push(`Adults: ${state.participants.adults}, Children: ${state.participants.children}, Infants: ${state.participants.infants}`);
-    det.push(`Option: ${state.option}`);
-    if (state.addons.length) det.push(`Add-ons: ${state.addons.map(a => a.name).join(', ')}`);
-    if (detailsEl) detailsEl.textContent = det.join(' · ');
+    // Build structured list for summary details
+    const items = [];
+    if (state.language) items.push(`Language: ${state.language}`);
+    if (state.date) items.push(`Date: ${state.date}`);
+    if (state.time) items.push(`Time: ${state.time}`);
+    items.push(`Adults: ${state.participants.adults}, Children: ${state.participants.children}, Infants: ${state.participants.infants}`);
+    items.push(`Option: ${state.option}`);
+    if (state.addons.length) items.push(`Add-ons: ${state.addons.map(a => a.name).join(', ')}`);
+    if (detailsEl) {
+      const listHTML = `<ul class="summary-list">${items.map(t => `<li>${t}</li>`).join('')}</ul>`;
+      detailsEl.innerHTML = listHTML;
+    }
   }
 
   // Header allows editing by expanding
@@ -170,9 +180,52 @@ document.addEventListener('DOMContentLoaded', function() {
         setSummary(stepEl, title);
         goToStep('participants');
         updateTotal();
+        // Update selected classes and buttons
+        document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+        const card = r.closest('.option-card');
+        if (card) card.classList.add('selected');
+        updateSelectButtons();
       }
     });
   });
+
+  function updateSelectButtons(){
+    document.querySelectorAll('.option-card').forEach(card => {
+      const btn = card.querySelector('.select-option-btn');
+      const radio = card.querySelector('input[name="bookingOption"]');
+      if(!btn || !radio) return;
+      if (radio.checked) {
+        btn.textContent = 'Selected';
+        btn.disabled = true;
+        card.classList.add('selected');
+      } else {
+        btn.textContent = 'Select';
+        btn.disabled = false;
+        card.classList.remove('selected');
+      }
+    });
+  }
+
+  // Select button behavior: choose the option radio
+  selectButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const card = btn.closest('.option-card');
+      if(!card) return;
+      const radio = card.querySelector('input[name="bookingOption"]');
+      if(!radio) return;
+      // Check and trigger change
+      if (!radio.checked) {
+        radio.checked = true;
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+      } else {
+        updateSelectButtons();
+      }
+    });
+  });
+
+  // Initialize selected UI for the pre-checked option (first one)
+  updateSelectButtons();
 
   // Participants counters
   counters.forEach(row => {
@@ -231,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const card = btn.closest('.option-card');
       if(!card) return;
       const expanded = card.classList.toggle('expanded');
-      btn.textContent = expanded ? 'Hide Details' : 'Show Details';
+      btn.innerHTML = expanded ? '<i class="fas fa-chevron-down icon-toggle" style="transform: rotate(180deg);"></i> Hide Details' : '<i class="fas fa-chevron-down icon-toggle" style="transform: rotate(0deg);"></i> Show Details';
     });
   });
 
@@ -261,12 +314,18 @@ document.addEventListener('DOMContentLoaded', function() {
   const modal = document.getElementById('bookingModal');
   if(!modal) return;
 
-  function smoothOffsetScroll(container, target, offset = 24, duration = 700){
+  // Control how far from the top the next step stops and how slow it scrolls
+  const SCROLL_OFFSET_PX = (typeof window.SCROLL_OFFSET_PX === 'number') ? window.SCROLL_OFFSET_PX : 56;      // space above the next step
+  const SCROLL_DURATION_MS = (typeof window.SCROLL_DURATION_MS === 'number') ? window.SCROLL_DURATION_MS : 900;  // slower scroll duration
+
+  function smoothOffsetScroll(container, target, offset = SCROLL_OFFSET_PX, duration = SCROLL_DURATION_MS){
     try{
       const containerRect = container.getBoundingClientRect();
       const targetRect = target.getBoundingClientRect();
       const start = container.scrollTop;
-      const end = start + (targetRect.top - containerRect.top) - offset;
+      const distance = (targetRect.top - containerRect.top);
+      const effectiveOffset = Math.min(offset, Math.max(0, distance - 16)); // ensure at least 16px visible
+      const end = Math.max(0, start + distance - effectiveOffset);
       const change = end - start;
       const startTime = performance.now();
       const easeInOut = (t)=> t<0.5 ? 2*t*t : -1+(4-2*t)*t;
@@ -286,6 +345,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Keep a reference to the original goToStep if present
   const originalGoToStep = window.goToStep;
+  // Expose smoother globally so earlier handlers can use it
+  window.smoothOffsetScroll = smoothOffsetScroll;
+  // Also expose current offset/duration so user tweaks apply consistently
+  window.SCROLL_OFFSET_PX = SCROLL_OFFSET_PX;
+  window.SCROLL_DURATION_MS = SCROLL_DURATION_MS;
 
   window.goToStep = function(currentStep){
     try{
@@ -294,10 +358,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const next = steps[currentIdx + 1];
       if(next){
         next.classList.add('active');
-        smoothOffsetScroll(modal, next, 32, 800); // slightly larger offset and slower
+        smoothOffsetScroll(modal, next, SCROLL_OFFSET_PX, SCROLL_DURATION_MS);
       } else {
         const summary = document.querySelector('.booking-summary');
-        if(summary) smoothOffsetScroll(modal, summary, 16, 700);
+        if(summary) smoothOffsetScroll(modal, summary, Math.max(16, SCROLL_OFFSET_PX - 8), SCROLL_DURATION_MS);
       }
     }catch(e){
       if(typeof originalGoToStep === 'function') originalGoToStep(currentStep);
