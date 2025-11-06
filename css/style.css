@@ -5175,7 +5175,7 @@ section.product-card-section {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  padding: 14px 16px 0;
+  padding: 14px 5px 0;
   border-bottom: 1px solid #ebebeb;
 }
 
@@ -5694,8 +5694,9 @@ perspective:none;
 }
 
 .product-card h4 {
-  margin: 5px 0 15px;
+  margin: 5px 0 10px;
   font-size: 20px;
+  color: var(--primary-color);
 }
 .product-card .highlights-list {
   display: flex;
@@ -5729,6 +5730,7 @@ perspective:none;
 .description-section h4 {
   margin-bottom: 8px;
   font-weight: 600;
+  color: var(--primary-color);
 }
 .description-section .desc-box {
   position: relative;

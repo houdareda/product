@@ -238,6 +238,17 @@
 .addon-price {
   color: #2563eb;
 }
+/* Addon quantity controls */
+.addon-qty {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.addon-qty .qty-count {
+  min-width: 30px;
+  text-align: center;
+  font-weight: 700;
+}
 
 /* Summary */
 .booking-summary {
@@ -300,4 +311,41 @@
   .booking-modal-overlay.show .booking-modal {
     transform: translate(0, 0);
   }
+}
+
+
+.expect-accordion {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all .3s 
+ease;
+margin-top: 10px;
+}
+
+.expect-toggle {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: #2e394a;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: all .3s 
+ease;
+gap: 10px;
+color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 18px;
+
+}
+.expect-toggle i{
+  color: var(--sand-color);
+}
+
+.lead.text-muted {
+    font-weight: 400;
+    font-size: 14px;
 }

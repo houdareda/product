@@ -21,9 +21,8 @@
     <!-- Link Swiper's CSS -->
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      href="css/swiper-bundle.min.css"
     />
-  </head>
 
   <body>
     <!-- Start Header -->
@@ -789,12 +788,24 @@
               <div class="selected-summary"></div>
             </div>
             <div class="step-body addons-list">
-              <label class="addon-item">
-                <input type="checkbox" value="photo" data-price="12" /> Professional Photo Package <span class="addon-price">€12</span>
-              </label>
-              <label class="addon-item">
-                <input type="checkbox" value="goggles" data-price="5" /> Protective Goggles <span class="addon-price">€5</span>
-              </label>
+              <div class="addon-item" data-addon="photo" data-price="12">
+                <span class="addon-name">Professional Photo Package</span>
+                <span class="addon-price">€12</span>
+                <div class="addon-qty">
+                  <button class="counter-btn minus" type="button">-</button>
+                  <span class="qty-count">0</span>
+                  <button class="counter-btn plus" type="button">+</button>
+                </div>
+              </div>
+              <div class="addon-item" data-addon="goggles" data-price="5">
+                <span class="addon-name">Protective Goggles</span>
+                <span class="addon-price">€5</span>
+                <div class="addon-qty">
+                  <button class="counter-btn minus" type="button">-</button>
+                  <span class="qty-count">0</span>
+                  <button class="counter-btn plus" type="button">+</button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -904,138 +915,171 @@
             </div>
             <h2 class="product-title">HarborHaven Hideaway</h2>
             <p class="product-address">1012 Ocean avaneu, New york, USA</p>
-          </div>
-
-          <div
-            class="trust-carousel-modern swiper trust-swiper"
-            id="dynamicTrustCarousel"
-          >
-            <div class="trust-slides-container swiper-wrapper">
-              <div class="trust-slide swiper-slide active" data-slide="0">
-                <div class="trust-badge">
-                  <div class="badge-icon">
-                    <i class="fas fa-award"></i>
-                  </div>
-                  <div class="badge-content">
-                    <h4 class="badge-title">Best Price Guarantee</h4>
-                    <p class="badge-subtitle">Direct booking - No commission</p>
-                  </div>
-                </div>
-              </div>
-              <div class="trust-slide swiper-slide" data-slide="1">
-                <div class="trust-badge">
-                  <div class="badge-icon pulse">
-                    <i class="fas fa-calendar-check"></i>
-                  </div>
-                  <div class="badge-content">
-                    <h4 class="badge-title">Flexible Booking</h4>
-                    <p class="badge-subtitle">
-                      Free cancellation up to 12h · Change date up to 4h
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="trust-slide swiper-slide" data-slide="2">
-                <div class="trust-badge">
-                  <div class="badge-icon">
-                    <i class="fas fa-hand-holding-usd"></i>
-                  </div>
-                  <div class="badge-content">
-                    <h4 class="badge-title">Transparent Pricing</h4>
-                    <p class="badge-subtitle">
-                      No hidden fees · All taxes included
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="trust-slide swiper-slide" data-slide="3">
-                <div class="trust-badge">
-                  <div class="badge-icon">
-                    <i class="fas fa-shuttle-van"></i>
-                  </div>
-                  <div class="badge-content">
-                    <h4 class="badge-title">Free Hotel Transfer</h4>
-                    <p class="badge-subtitle">
-                      All Egypt hotels pickup & drop-off included
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="trust-slide swiper-slide" data-slide="4">
-                <div class="trust-badge">
-                  <div class="badge-icon">
-                    <i class="fas fa-credit-card"></i>
-                  </div>
-                  <div class="badge-content">
-                    <h4 class="badge-title">Flexible Payment</h4>
-                    <div class="payment-options">
-                      <span class="payment-method">Online</span>
-                      <span class="payment-method">Cash</span>
-                      <span class="currency">USD</span>
-                      <span class="currency">EUR</span>
-                      <span class="currency">GBP</span>
-                      <span class="currency">EGP</span>
+            
+            <div
+              class="trust-carousel-modern swiper trust-swiper"
+              id="dynamicTrustCarousel"
+            >
+              <div class="trust-slides-container swiper-wrapper">
+                <div class="trust-slide swiper-slide active" data-slide="0">
+                  <div class="trust-badge">
+                    <div class="badge-icon">
+                      <i class="fas fa-award"></i>
+                    </div>
+                    <div class="badge-content">
+                      <h4 class="badge-title">Best Price Guarantee</h4>
+                      <p class="badge-subtitle">Direct booking - No commission</p>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div class="trust-slide swiper-slide" data-slide="5">
-                <div class="trust-badge">
-                  <div class="badge-icon">
-                    <i class="fas fa-certificate"></i>
-                  </div>
-                  <div class="badge-content">
-                    <h4 class="badge-title">Licensed & Insured</h4>
-                    <p class="badge-subtitle">
-                      Egyptian Tourism Authority · Full travel insurance
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="trust-slide swiper-slide" data-slide="6">
-                <div class="trust-badge">
-                  <div class="badge-icon tripadvisor">
-                    <img
-                      src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tripadvisor.svg"
-                      alt="Tripadvisor"
-                      width="24"
-                      height="24"
-                      loading="lazy"
-                      decoding="async"
-                      style="height: 24px; width: 24px"
-                    />
-                  </div>
-                  <div class="badge-content">
-                    <h4 class="badge-title">Excellence Award 2025</h4>
-                    <div class="rating-stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star-half-alt"></i>
-                      <span class="rating-text">4.7 (6696 reviews)</span>
+                <div class="trust-slide swiper-slide" data-slide="1">
+                  <div class="trust-badge">
+                    <div class="badge-icon pulse">
+                      <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="badge-content">
+                      <h4 class="badge-title">Flexible Booking</h4>
+                      <p class="badge-subtitle">
+                        Free cancellation up to 12h · Change date up to 4h
+                      </p>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="trust-slide swiper-slide" data-slide="7">
-                <div class="trust-badge">
-                  <div class="badge-icon">
-                    <i class="fas fa-bolt"></i>
+  
+                <div class="trust-slide swiper-slide" data-slide="2">
+                  <div class="trust-badge">
+                    <div class="badge-icon">
+                      <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="badge-content">
+                      <h4 class="badge-title">Transparent Pricing</h4>
+                      <p class="badge-subtitle">
+                        No hidden fees · All taxes included
+                      </p>
+                    </div>
                   </div>
-                  <div class="badge-content">
-                    <h4 class="badge-title">Instant Confirmation</h4>
-                    <p class="badge-subtitle">
-                      Immediate booking confirmation via email
-                    </p>
+                </div>
+                <div class="trust-slide swiper-slide" data-slide="3">
+                  <div class="trust-badge">
+                    <div class="badge-icon">
+                      <i class="fas fa-shuttle-van"></i>
+                    </div>
+                    <div class="badge-content">
+                      <h4 class="badge-title">Free Hotel Transfer</h4>
+                      <p class="badge-subtitle">
+                        All Egypt hotels pickup & drop-off included
+                      </p>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="trust-slide swiper-slide" data-slide="4">
+                  <div class="trust-badge">
+                    <div class="badge-icon">
+                      <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="badge-content">
+                      <h4 class="badge-title">Flexible Payment</h4>
+                      <div class="payment-options">
+                        <span class="payment-method">Online</span>
+                        <span class="payment-method">Cash</span>
+                        <span class="currency">USD</span>
+                        <span class="currency">EUR</span>
+                        <span class="currency">GBP</span>
+                        <span class="currency">EGP</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="trust-slide swiper-slide" data-slide="5">
+                  <div class="trust-badge">
+                    <div class="badge-icon">
+                      <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="badge-content">
+                      <h4 class="badge-title">Licensed & Insured</h4>
+                      <p class="badge-subtitle">
+                        Egyptian Tourism Authority · Full travel insurance
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="trust-slide swiper-slide" data-slide="6">
+                  <div class="trust-badge">
+                    <div class="badge-icon tripadvisor">
+                      <img
+                        src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tripadvisor.svg"
+                        alt="Tripadvisor"
+                        width="24"
+                        height="24"
+                        loading="lazy"
+                        decoding="async"
+                        style="height: 24px; width: 24px"
+                      />
+                    </div>
+                    <div class="badge-content">
+                      <h4 class="badge-title">Excellence Award 2025</h4>
+                      <div class="rating-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span class="rating-text">4.7 (6696 reviews)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="trust-slide swiper-slide" data-slide="7">
+                  <div class="trust-badge">
+                    <div class="badge-icon">
+                      <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="badge-content">
+                      <h4 class="badge-title">Instant Confirmation</h4>
+                      <p class="badge-subtitle">
+                        Immediate booking confirmation via email
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            
+
+
+            <div>
+               <h4>Highlights</h4>
+
+              <div class="highlights-list">
+                <div class="highlight-item">
+                  Conquer the rolling dunes on a thrilling Quad Biking
+                  adventure.
+                </div>
+                <div class="highlight-item">
+                  Choose from morning, afternoon, or sunset tours for a tailored
+                  experience.
+                </div>
+                <div class="highlight-item">
+                  Immerse yourself in Bedouin culture with a visit to a
+                  traditional village.
+                </div>
+                <div class="highlight-item">
+                  Savor authentic Bedouin tea and explore local traditions.
+                </div>
+                <div class="highlight-item">
+                  Experience the desert from a new perspective on a peaceful
+                  camel ride.
+                </div>
+                <div class="highlight-item">
+                  Enjoy flexible group or small-group options for a personalized
+                  touch.
+                </div>
+              </div>
+            </div>
           </div>
+
 
           <!-- Tabs -->
           <div class="product-tabs slide-up" role="tablist">
@@ -1078,34 +1122,27 @@
             class="tab-panel slide-up active"
             role="tabpanel"
           >
-            <div class="about-content">
-              <h4>Highlights</h4>
 
-              <div class="highlights-list">
-                <div class="highlight-item">
-                  Conquer the rolling dunes on a thrilling Quad Biking
-                  adventure.
-                </div>
-                <div class="highlight-item">
-                  Choose from morning, afternoon, or sunset tours for a tailored
-                  experience.
-                </div>
-                <div class="highlight-item">
-                  Immerse yourself in Bedouin culture with a visit to a
-                  traditional village.
-                </div>
-                <div class="highlight-item">
-                  Savor authentic Bedouin tea and explore local traditions.
-                </div>
-                <div class="highlight-item">
-                  Experience the desert from a new perspective on a peaceful
-                  camel ride.
-                </div>
-                <div class="highlight-item">
-                  Enjoy flexible group or small-group options for a personalized
-                  touch.
-                </div>
-              </div>
+          <div class="expect-accordion mb-4 mt-3">
+        <div class="expect-accordion-header active" id="expectHeader">
+            <h2 class="expect-title mb-0">
+                <button class="expect-toggle" type="button" aria-expanded="true" aria-controls="expectContent">
+                  
+                    What to Expect
+                </button>
+            </h2>
+        </div>
+        <div class="expect-accordion-content active" id="expectContent">
+            <div class="expect-content-inner">
+                <p class="lead text-muted">
+                    Discover the thrill of a quad ride in Hurghada! Embark on an exciting journey through the Red Sea desert, exploring stunning sea cliffs, majestic mountain landscapes, and desert trails. Whether you're riding quads on the beach or enjoying breathtaking mountain views from the trails, this safari tour in Hurghada offers an unforgettable experience for all adventurers.                </p>
+            </div>
+        </div>
+    </div>
+
+
+            <div class="about-content">
+             
 
               <!-- Description expandable section -->
               <div class="description-section slide-up">
@@ -1455,7 +1492,7 @@ Experience the perfect blend of thrill and tradition with this Quad Tour Hurghad
     </footer>
 
     <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="js/swiper-bundle.min.js"></script>
 
     <!-- JavaScript -->
     <script src="js/header.js"></script>

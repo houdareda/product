@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const detailsEl = document.getElementById('bookingDetails');
 
   const counters = Array.from(document.querySelectorAll('.counter-row'));
-  const addonChecks = Array.from(document.querySelectorAll('.addon-item input[type="checkbox"]'));
+  const addonItems = Array.from(document.querySelectorAll('.addons-list .addon-item'));
 
   const state = {
     date: null,
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateTotal() {
     const base = (state.participants.adults * state.prices.adult) + (state.participants.children * state.prices.child);
     const optionFee = state.prices.options[state.option] || 0;
-    const addonsFee = state.addons.reduce((sum, a) => sum + (a.price || 0), 0);
+    const addonsFee = state.addons.reduce((sum, a) => sum + ((a.price || 0) * (a.qty || 0)), 0);
     const total = base + optionFee + addonsFee;
     if (totalEl) totalEl.textContent = `€${total.toFixed(2)}`;
 
@@ -103,7 +103,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (state.time) items.push(`Time: ${state.time}`);
     items.push(`Adults: ${state.participants.adults}, Children: ${state.participants.children}, Infants: ${state.participants.infants}`);
     items.push(`Option: ${state.option}`);
-    if (state.addons.length) items.push(`Add-ons: ${state.addons.map(a => a.name).join(', ')}`);
+    const addonSummary = state.addons.filter(a => (a.qty || 0) > 0);
+    if (addonSummary.length) items.push(`Add-ons: ${addonSummary.map(a => `${a.name} x${a.qty}`).join(', ')}`);
     if (detailsEl) {
       const listHTML = `<ul class="summary-list">${items.map(t => `<li>${t}</li>`).join('')}</ul>`;
       detailsEl.innerHTML = listHTML;
@@ -254,25 +255,38 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Addons
-  addonChecks.forEach(chk => {
-    chk.addEventListener('change', () => {
-      const price = parseFloat(chk.dataset.price || '0');
-      // get label text (name)
-      let name = 'Addon';
-      const textNode = chk.parentElement ? chk.parentElement.cloneNode(true) : null;
-      if (textNode) {
-        name = textNode.textContent.replace(/\s*€.*$/, '').trim();
-      }
-      if (chk.checked) {
-        state.addons.push({ name, price });
+  // Addons quantity counters
+  addonItems.forEach(item => {
+    const minus = item.querySelector('.minus');
+    const plus = item.querySelector('.plus');
+    const countEl = item.querySelector('.qty-count');
+    const name = (item.querySelector('.addon-name')?.textContent || item.dataset.addon || 'Addon').trim();
+    const price = parseFloat(item.dataset.price || '0');
+
+    function setQty(qty) {
+      countEl.textContent = String(qty);
+      const existing = state.addons.find(a => a.name === name);
+      if (existing) {
+        existing.qty = qty;
+        existing.price = price; // keep price synced
       } else {
-        state.addons = state.addons.filter(a => a.name !== name);
+        state.addons.push({ name, price, qty });
       }
+      const chosen = state.addons.filter(a => (a.qty || 0) > 0);
       const stepEl = document.querySelector('.booking-step[data-step="addons"]');
-      const text = state.addons.length ? state.addons.map(a => a.name).join(', ') : 'No add-ons';
+      const text = chosen.length ? chosen.map(a => `${a.name} x${a.qty}`).join(', ') : 'No add-ons';
       setSummary(stepEl, text, { collapse: false });
       updateTotal();
+    }
+
+    minus?.addEventListener('click', () => {
+      const current = parseInt(countEl.textContent || '0', 10);
+      const next = Math.max(0, current - 1);
+      setQty(next);
+    });
+    plus?.addEventListener('click', () => {
+      const current = parseInt(countEl.textContent || '0', 10);
+      setQty(current + 1);
     });
   });
 
