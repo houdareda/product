@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
         spaceBetween: 30,
         loop: true,
         autoplay: {
-            delay: 2000,
+            delay: 2000000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
         },
@@ -109,8 +109,8 @@ document.addEventListener('DOMContentLoaded', function() {
  
         breakpoints: {
             // Mobile (up to 767px): 1 slide
-            320: {
-                slidesPerView: 1,
+            0: {
+                slidesPerView: 2,
                 spaceBetween: 15,
                 speed: 300,
             },
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
         spaceBetween: 30,
         loop: true,
         autoplay: {
-            delay: 200000,
+            delay: 2000000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
         },
@@ -260,10 +260,10 @@ document.addEventListener('DOMContentLoaded', function() {
             spaceBetween: 0,
             loop: true,
             speed: 400,
-            pagination: {
-                el: '.product-hero-swiper .swiper-pagination',
-                clickable: true,
-            },
+            autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
         });
 
         // Thumbnails click to navigate + active highlighting
