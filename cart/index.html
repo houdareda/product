@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Cart</title>
+    <link rel="icon" href="../img/logo.png" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="../css/cart.css" />
+  </head>
+  <body>
+    <main class="cart-page">
+      <div class="container">
+        <!-- Header Card -->
+        <section class="cart-header-card">
+          <h2 class="cart-title">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Your Cart</span>
+          </h2>
+          <div class="cart-header-actions">
+            <a href="../product.html" class="cart-action-btn outline">
+              <i class="fas fa-arrow-left"></i>
+              Continue Shopping
+            </a>
+            <button id="clearCartBtn" class="cart-action-btn danger">
+              <i class="fas fa-trash"></i>
+              Clear Cart
+            </button>
+          </div>
+        </section>
+
+        <!-- Items List -->
+        <section id="cartItemsList" class="cart-items-list">
+          <!-- Sample Item Card -->
+          <article class="cart-item-card" data-item-id="1">
+            <div class="item-header">
+              <h3 class="item-title">Sharm El Sheikh: ATV, Camel Ride with BBQ Dinner and Show</h3>
+              <div class="item-actions">
+                <a class="item-action" href="../product.html#openBookingSheet" title="Edit">
+                  <i class="fas fa-pen"></i>
+                </a>
+                <button class="item-action delete" data-action="delete" title="Remove">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+            <div class="item-body">
+              <div class="item-media">
+                <img src="https://egyptra.pro/uploads/photo_library/photo_6e30fa416a6c18a5.webp" alt="Tour preview" />
+                <div class="item-price">€20.50</div>
+              </div>
+              <div class="item-info">
+                <div class="info-pill">
+                  <i class="fas fa-calendar-day"></i>
+                  <span>Tue, Nov 18, 2025</span>
+                </div>
+                <div class="info-pill">
+                  <i class="fas fa-clock"></i>
+                  <span>2:00 PM</span>
+                </div>
+                <div class="info-pill">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>sharm-el-sheikh</span>
+                </div>
+                <div class="info-pill">
+                  <i class="fas fa-user"></i>
+                  <span>1 Adult</span>
+                </div>
+                <div class="info-pill">
+                  <i class="fas fa-language"></i>
+                  <span>english</span>
+                </div>
+
+                <div class="option-row">
+                  <span class="label">Option:</span>
+                  <span class="value">Double Quad ATV, Camel, Dinner, and Show</span>
+                </div>
+              </div>
+            </div>
+            
+          </article>
+        </section>
+
+        <!-- Cart Details: Forms and Summary -->
+        <section class="cart-details" id="cartDetails">
+          <div class="details-layout">
+            <!-- Left: Forms -->
+            <div class="details-left">
+              <!-- Lead Guest Information -->
+              <article class="form-card" id="leadGuestCard">
+                <h3 class="form-title">
+                  <i class="fas fa-user"></i>
+                  <span>Lead Guest Information</span>
+                </h3>
+                <div class="form-grid">
+                  <div class="input-group">
+                    <label for="firstName">First Name <span class="req">*</span></label>
+                    <div class="field"><input type="text" id="firstName" required placeholder="first name" /></div>
+                  </div>
+                  <div class="input-group">
+                    <label for="lastName">Last Name <span class="req">*</span></label>
+                    <div class="field"><input type="text" id="lastName" required placeholder="last name" /></div>
+                  </div>
+                  <div class="input-group full">
+                    <label for="email">Email Address <span class="req">*</span></label>
+                    <div class="field"><input type="email" id="email" required placeholder="name@example.com" /></div>
+                  </div>
+                  <div class="input-group full">
+                    <label for="phone">Phone Number <span class="optional">Optional</span></label>
+                    <div class="field"><input type="tel" id="phone" placeholder="+201111111111" /></div>
+                  </div>
+                  <div class="input-group full">
+                    <label for="nationality">Nationality <span class="optional">Optional</span></label>
+                    <div class="field">
+                      <select id="nationality">
+                        <option value="">Select nationality</option>
+                        <option>Egypt</option>
+                        <option>Saudi Arabia</option>
+                        <option>United Arab Emirates</option>
+                        <option>Qatar</option>
+                        <option>Jordan</option>
+                        <option>Morocco</option>
+                        <option>Tunisia</option>
+                        <option>Algeria</option>
+                        <option>Libya</option>
+                        <option>Sudan</option>
+                        <option>Lebanon</option>
+                        <option>Palestine</option>
+                        <option>Turkey</option>
+                        <option>Germany</option>
+                        <option>United Kingdom</option>
+                        <option>United States</option>
+                        <option>France</option>
+                        <option>Italy</option>
+                        <option>Spain</option>
+                        <option>Netherlands</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Hotel Information -->
+              <article class="form-card" id="hotelInfoCard">
+                <h3 class="form-title">
+                  <i class="fas fa-hotel"></i>
+                  <span>Hotel Information</span>
+                </h3>
+                <div class="form-grid">
+                  <div class="input-group full">
+                    <label for="hotelName">Hotel Name <span class="req">*</span></label>
+                    <div class="field"><input type="text" id="hotelName" required placeholder="hotel name" /></div>
+                  </div>
+                  <div class="input-group full">
+                    <label for="roomNumber">Room Number <span class="optional">Optional</span></label>
+                    <div class="field"><input type="text" id="roomNumber" placeholder="room number" /></div>
+                  </div>
+                </div>
+                <div class="toggle-row">
+                  <label class="checkbox">
+                    <input type="checkbox" id="saveInfo" checked />
+                    <span>Save my information for next time</span>
+                  </label>
+                  <p class="note">Your information will be securely stored in your browser for faster booking next time.</p>
+                </div>
+              </article>
+
+              <!-- Additional Information -->
+              <article class="form-card" id="additionalInfoCard">
+                <h3 class="form-title">
+                  <i class="fas fa-info-circle"></i>
+                  <span>Additional Information</span>
+                </h3>
+                <div class="input-group full">
+                  <label for="notes">Special Requests or Notes <span class="optional">Optional</span></label>
+                  <div class="field"><textarea id="notes" rows="4" placeholder="Write any notes or requests"></textarea></div>
+                </div>
+              </article>
+
+
+                  <!-- Right: Summary -->
+            <aside class="summary-card" id="bookingSummary">
+              <h3 class="summary-title"><i class="fas fa-receipt"></i><span>Booking Summary</span></h3>
+              <div class="summary-body">
+                <div class="summary-row">
+                  <span class="label">Tour:</span>
+                  <span class="value" id="sumTour">—</span>
+                </div>
+                <div class="summary-row">
+                  <span class="label">Date:</span>
+                  <span class="value" id="sumDate">—</span>
+                </div>
+                <div class="summary-row">
+                  <span class="label">Time:</span>
+                  <span class="value" id="sumTime">—</span>
+                </div>
+                <div class="summary-row">
+                  <span class="label">Guide Language:</span>
+                  <span class="value" id="sumLang">—</span>
+                </div>
+                <div class="summary-row">
+                  <span class="label">Participants:</span>
+                  <span class="value" id="sumParticipants">—</span>
+                </div>
+                <div class="summary-row">
+                  <span class="label">Selected Option:</span>
+                  <span class="value" id="sumOption">—</span>
+                </div>
+
+                <div class="promo">
+                  <div class="promo-header"><i class="fas fa-gift"></i><span>PROMO CODE</span></div>
+                  <div class="promo-controls">
+                    <input id="promoCodeInput" type="text" placeholder="Enter promo code" />
+                    <button id="applyPromoBtn" class="apply-btn">Apply</button>
+                  </div>
+                  <div class="promo-msg" id="promoMsg"></div>
+                </div>
+
+                <div class="total-row">
+                  <span class="label">Total Price:</span>
+                  <span class="value" id="totalPrice">€0.00</span>
+                </div>
+              </div>
+
+              <!-- Trust badges -->
+              <div class="trust-cards">
+                <div class="trust-card">
+                  <div class="trust-icon" style="background:#3b5dbb"><i class="fas fa-shield-alt"></i></div>
+                  <div class="trust-info">
+                    <strong>SSL Secured</strong>
+                    <small>256-bit TLS encryption</small>
+                  </div>
+                </div>
+                <div class="trust-card">
+                  <div class="trust-icon" style="background:#3b5dbb"><i class="fas fa-credit-card"></i></div>
+                  <div class="trust-info">
+                    <strong>Secure Checkout</strong>
+                    <small>Safe payment processing</small>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            
+
+              <!-- Select Payment Method -->
+              <article class="form-card payment-card" id="paymentMethodCard">
+                <h3 class="form-title">
+                  <i class="fas fa-money-check-alt"></i>
+                  <span>Select Payment Method</span>
+                </h3>
+
+                <div class="payment-options">
+                  <label class="payment-option">
+                    <input type="radio" name="paymentMethod" value="pay_now" />
+                    <div class="option-content">
+                      <div class="option-text">
+                        <span class="option-title">Pay Now</span>
+                        <span class="option-desc">Receive secure payment link via email</span>
+                      </div>
+                      <i class="fas fa-envelope"></i>
+                    </div>
+                  </label>
+
+                  <label class="payment-option">
+                    <input type="radio" name="paymentMethod" value="pay_spot" />
+                    <div class="option-content">
+                      <div class="option-text">
+                        <span class="option-title">Pay on Spot</span>
+                        <span class="option-desc">Cash or card payment during your tour</span>
+                      </div>
+                      <i class="fas fa-money-check"></i>
+                    </div>
+                  </label>
+
+                  <label class="payment-option">
+                    <input type="radio" name="paymentMethod" value="pay_online_card" />
+                    <div class="option-content">
+                      <div class="option-text">
+                        <span class="option-title">Pay on Website (Visa/Mastercard)</span>
+                        <span class="option-desc">Secure card payment now</span>
+                      </div>
+                      <i class="fas fa-credit-card"></i>
+                    </div>
+                  </label>
+                </div>
+
+                <button id="confirmBookingBtn" class="confirm-btn">
+                  <i class="fas fa-check-circle"></i>
+                  Confirm Booking
+                </button>
+
+                <ul class="benefits-list">
+                  <li>
+                    <span class="benefit-icon"><i class="fas fa-shield-alt"></i></span>
+                    <div class="benefit-text">
+                      <strong>Book Now, Pay now or Later</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="benefit-icon"><i class="fas fa-credit-card"></i></span>
+                    <div class="benefit-text">
+                      <strong>Availability to pay by card now or on spot</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="benefit-icon"><i class="fas fa-headset"></i></span>
+                    <div class="benefit-text">
+                      <strong>24/7 Customer Support</strong>
+                    </div>
+                  </li>
+                </ul>
+              </article>
+            </div>
+
+        
+          </div>
+        </section>
+
+        <!-- Empty Cart State -->
+        <section id="emptyCartState" class="empty-cart-state" style="display:none;">
+          <div class="empty-card">
+            <i class="fas fa-shopping-cart"></i>
+            <h4>Your cart is empty</h4>
+            <p>Start adding your favorite products</p>
+            <a href="../product.html" class="cart-action-btn outline">
+              <i class="fas fa-arrow-left"></i>
+              Continue Shopping
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      (function(){
+        const list = document.getElementById('cartItemsList');
+        const empty = document.getElementById('emptyCartState');
+        const clearBtn = document.getElementById('clearCartBtn');
+        const details = document.getElementById('cartDetails');
+
+        // Summary elements
+        const sumTour = document.getElementById('sumTour');
+        const sumDate = document.getElementById('sumDate');
+        const sumTime = document.getElementById('sumTime');
+        const sumLang = document.getElementById('sumLang');
+        const sumParticipants = document.getElementById('sumParticipants');
+        const sumOption = document.getElementById('sumOption');
+        const totalPriceEl = document.getElementById('totalPrice');
+        const promoInput = document.getElementById('promoCodeInput');
+        const promoBtn = document.getElementById('applyPromoBtn');
+        const promoMsg = document.getElementById('promoMsg');
+        const confirmBtn = document.getElementById('confirmBookingBtn');
+        const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
+        const paymentCard = document.getElementById('paymentMethodCard');
+
+        // Form inputs
+        const saveInfo = document.getElementById('saveInfo');
+        const formFields = ['firstName','lastName','email','phone','nationality','hotelName','roomNumber','notes']
+          .map(id => document.getElementById(id));
+
+        function updateEmpty(){
+          const hasItems = !!list.querySelector('.cart-item-card');
+          list.style.display = hasItems ? 'block' : 'none';
+          empty.style.display = hasItems ? 'none' : 'block';
+          details.style.display = hasItems ? 'block' : 'none';
+        }
+
+        // Remove item handlers
+        clearBtn?.addEventListener('click', function(){
+          list.innerHTML = '';
+          updateEmpty();
+          calculateTotal();
+        });
+
+        list?.addEventListener('click', function(e){
+          const btn = e.target.closest('[data-action="delete"]');
+          if(!btn) return;
+          const card = btn.closest('.cart-item-card');
+          card?.remove();
+          updateEmpty();
+          fillSummaryFromCart();
+          calculateTotal();
+        });
+
+        // Summary filling from first cart item
+        function fillSummaryFromCart(){
+          const first = list.querySelector('.cart-item-card');
+          if(!first){
+            sumTour.textContent = '—';
+            sumDate.textContent = '—';
+            sumTime.textContent = '—';
+            sumLang.textContent = '—';
+            sumParticipants.textContent = '—';
+            sumOption.textContent = '—';
+            return;
+          }
+          sumTour.textContent = first.querySelector('.item-title')?.textContent?.trim() || '—';
+          const pills = [...first.querySelectorAll('.info-pill span')].map(s=>s.textContent.trim());
+          // expected order: date, time, location, participants, language
+          sumDate.textContent = pills[0] || '—';
+          sumTime.textContent = pills[1] || '—';
+          sumLang.textContent = pills[4] || '—';
+          sumParticipants.textContent = pills[3] || '—';
+          sumOption.textContent = first.querySelector('.option-row .value')?.textContent?.trim() || '—';
+        }
+
+        // Total calculation and promo code
+        let discountPct = 0;
+        function calculateTotal(){
+          let total = 0;
+          list.querySelectorAll('.item-price').forEach(el => {
+            const n = parseFloat((el.textContent || '').replace(/[^0-9.]/g,''));
+            if(!isNaN(n)) total += n;
+          });
+          const discounted = total * (1 - discountPct/100);
+          totalPriceEl.textContent = `€${discounted.toFixed(2)}`;
+        }
+
+        promoBtn?.addEventListener('click', function(){
+          const code = (promoInput.value || '').trim().toUpperCase();
+          const codes = { 'SAVE10':10, 'EGYPTRA10':10, 'WELCOME5':5 };
+          if(codes[code]){
+            discountPct = codes[code];
+            promoMsg.textContent = `Applied ${discountPct}% discount`;
+            promoMsg.className = 'promo-msg success';
+          } else {
+            discountPct = 0;
+            promoMsg.textContent = 'Invalid promo code';
+            promoMsg.className = 'promo-msg error';
+          }
+          calculateTotal();
+        });
+
+        // Form validation states
+        function toggleValidState(input){
+          const wrap = input.closest('.input-group');
+          if(!wrap) return;
+          const ok = input.checkValidity() && (input.value||'').trim().length>0;
+          wrap.classList.toggle('valid', ok);
+        }
+        formFields.forEach(inp => {
+          if(!inp) return;
+          ['input','change'].forEach(evt=> inp.addEventListener(evt,()=>toggleValidState(inp)));
+          toggleValidState(inp);
+        });
+
+        // Persist info in localStorage
+        const KEY = 'egyptra_cart_user_info';
+        function saveToStorage(){
+          if(!saveInfo?.checked) return;
+          const data = {};
+          formFields.forEach(inp=>{ if(inp) data[inp.id]=inp.value; });
+          localStorage.setItem(KEY, JSON.stringify(data));
+        }
+        function loadFromStorage(){
+          try{
+            const raw = localStorage.getItem(KEY);
+            if(!raw) return;
+            const data = JSON.parse(raw);
+            formFields.forEach(inp=>{ if(inp && data[inp.id]) inp.value = data[inp.id]; toggleValidState(inp); });
+          }catch(e){/* ignore */}
+        }
+        saveInfo?.addEventListener('change', ()=>{ if(!saveInfo.checked) localStorage.removeItem(KEY); });
+        window.addEventListener('beforeunload', saveToStorage);
+
+        // Payment card highlight
+        function updatePaymentActive(){
+          const hasSel = Array.from(paymentRadios).some(r=>r.checked);
+          paymentCard?.classList.toggle('active', hasSel);
+        }
+        paymentRadios.forEach(r=> r.addEventListener('change', updatePaymentActive));
+        updatePaymentActive();
+
+        // Confirm booking handling
+        function getSelectedPayment(){
+          let val = null; paymentRadios.forEach(r=>{ if(r.checked) val = r.value; });
+          return val;
+        }
+
+        confirmBtn?.addEventListener('click', function(){
+          // basic validation
+          const requiredIds = ['firstName','lastName','email','hotelName'];
+          const missing = requiredIds.filter(id => {
+            const el = document.getElementById(id);
+            return !el || !(el.value||'').trim();
+          });
+          if(missing.length){
+            const firstMissing = document.getElementById(missing[0]);
+            firstMissing?.focus();
+            firstMissing?.scrollIntoView({behavior:'smooth', block:'center'});
+            alert('Please fill all required fields.');
+            return;
+          }
+          const pm = getSelectedPayment();
+          if(!pm){
+            alert('Please select a payment method.');
+            return;
+          }
+          localStorage.setItem('egyptra_cart_payment_method', pm);
+          alert('Booking confirmed! We will contact you shortly.');
+        });
+
+        // Init
+        updateEmpty();
+        loadFromStorage();
+        fillSummaryFromCart();
+        calculateTotal();
+      })();
+    </script>
+  </body>
+</html>

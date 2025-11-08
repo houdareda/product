@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const selectButtons = Array.from(document.querySelectorAll('.option-card .select-option-btn'));
   const totalEl = document.getElementById('bookingTotal');
   const detailsEl = document.getElementById('bookingDetails');
+  const confirmBtn = document.querySelector('.confirm-booking-btn');
+  const addToCartBtn = document.querySelector('.check-out');
+  const btnsContainer = document.querySelector('.booking-summary .btns');
 
   const counters = Array.from(document.querySelectorAll('.counter-row'));
   const addonItems = Array.from(document.querySelectorAll('.addons-list .addon-item'));
@@ -75,6 +78,78 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // Inline validation tip helpers
+  function getStepEl(stepName){
+    return document.querySelector(`.booking-step[data-step="${stepName}"]`);
+  }
+  function clearValidationTip(stepName){
+    const stepEl = getStepEl(stepName);
+    if(!stepEl) return;
+    const tip = stepEl.querySelector('.validation-tip');
+    if(tip) tip.remove();
+  }
+  function showValidationTip(stepName, message){
+    const stepEl = getStepEl(stepName);
+    if(!stepEl) return;
+    // Ensure step is visible/open
+    stepEl.classList.remove('collapsed');
+    stepEl.classList.add('active');
+    // Create or update tip next to the header title
+    const header = stepEl.querySelector('.step-header .title-wrap') || stepEl.querySelector('.step-header');
+    let tip = header.querySelector('.validation-tip');
+    if(!tip){
+      tip = document.createElement('span');
+      tip.className = 'validation-tip';
+      header.appendChild(tip);
+    }
+    tip.textContent = message;
+    // Scroll the modal to the step container (no extra offset)
+    if (typeof window.smoothOffsetScroll === 'function') {
+      const off = (typeof window.VALIDATION_SCROLL_OFFSET_PX === 'number')
+        ? window.VALIDATION_SCROLL_OFFSET_PX
+        : (typeof window.SCROLL_OFFSET_PX === 'number' ? window.SCROLL_OFFSET_PX : 64);
+      const dur = (typeof window.SCROLL_DURATION_MS === 'number') ? window.SCROLL_DURATION_MS : 900;
+      window.smoothOffsetScroll(modal, stepEl, off, dur);
+    } else {
+      stepEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // Global validation message above the confirm button
+  function setGlobalValidationMessage(text){
+    if(!btnsContainer) return;
+    let msg = btnsContainer.querySelector('.global-validation');
+    if(!msg){
+      msg = document.createElement('div');
+      msg.className = 'global-validation';
+      btnsContainer.insertBefore(msg, btnsContainer.firstElementChild);
+    }
+    msg.textContent = text || '';
+    if(text){
+      msg.style.display = 'block';
+    } else {
+      msg.style.display = 'none';
+    }
+  }
+  function clearGlobalValidationMessage(){
+    if(!btnsContainer) return;
+    const msg = btnsContainer.querySelector('.global-validation');
+    if(msg) msg.remove();
+  }
+  function updateGlobalValidation(){
+    const needsDate = !state.date;
+    const needsTime = !state.time;
+    if(needsDate && needsTime){
+      setGlobalValidationMessage('Please select date and time');
+    } else if(needsDate){
+      setGlobalValidationMessage('Please select a date');
+    } else if(needsTime){
+      setGlobalValidationMessage('Please select a time');
+    } else {
+      clearGlobalValidationMessage();
+    }
+  }
+
   function goToStep(name) {
     const next = document.querySelector(`.booking-step[data-step="${name}"]`);
     if (next) {
@@ -132,17 +207,20 @@ document.addEventListener('DOMContentLoaded', function() {
   // Date selection
   if (dateInput) {
     dateInput.addEventListener('change', () => {
+      clearValidationTip('date');
       state.date = dateInput.value;
       const stepEl = document.querySelector('.booking-step[data-step="date"]');
       setSummary(stepEl, state.date);
       goToStep('time');
       updateTotal();
+      updateGlobalValidation();
     });
   }
 
   // Time selection
   timeOptions.forEach(btn => {
     btn.addEventListener('click', () => {
+      clearValidationTip('time');
       timeOptions.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       state.time = btn.dataset.time;
@@ -150,6 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
       setSummary(stepEl, state.time);
       goToStep('language');
       updateTotal();
+      updateGlobalValidation();
     });
   });
 
@@ -296,6 +375,34 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   if (modalClose) modalClose.addEventListener('click', closeModal);
   overlay.addEventListener('click', function(e){ if (e.target === overlay) closeModal(); });
+
+  // Confirm booking validation: require date and time
+  if (confirmBtn) {
+    confirmBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      updateGlobalValidation();
+      if(!state.date){
+        showValidationTip('date', 'Please select a booking date.');
+        return;
+      }
+      if(!state.time){
+        showValidationTip('time', 'Please select a start time.');
+        return;
+      }
+      // Passed validation: proceed (integration point)
+      console.log('Booking ready to confirm', state);
+      // Navigate to cart page
+  window.location.href = 'cart/index.html';
+    });
+  }
+
+  // Add to Cart: close booking modal sheet
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      closeModal();
+    });
+  }
 });
 // --- Enhanced slow, offset scrolling between steps (override) ---
 // This redefines goToStep to scroll the modal more slowly and leave
@@ -305,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if(!modal) return;
 
   // Control how far from the top the next step stops and how slow it scrolls
-  const SCROLL_OFFSET_PX = (typeof window.SCROLL_OFFSET_PX === 'number') ? window.SCROLL_OFFSET_PX : 56;      // space above the next step
+  const SCROLL_OFFSET_PX = (typeof window.SCROLL_OFFSET_PX === 'number') ? window.SCROLL_OFFSET_PX : 64;      // space above the next step
   const SCROLL_DURATION_MS = (typeof window.SCROLL_DURATION_MS === 'number') ? window.SCROLL_DURATION_MS : 900;  // slower scroll duration
 
   function smoothOffsetScroll(container, target, offset = SCROLL_OFFSET_PX, duration = SCROLL_DURATION_MS){
@@ -314,8 +421,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const targetRect = target.getBoundingClientRect();
       const start = container.scrollTop;
       const distance = (targetRect.top - containerRect.top);
-      const effectiveOffset = Math.min(offset, Math.max(0, distance - 16)); // ensure at least 16px visible
-      const end = Math.max(0, start + distance - effectiveOffset);
+      // Where the target would land if aligned to the top
+      const targetTopAlignedScroll = start + distance;
+      // Desired end ensures a fixed gap above the target
+      const desiredEnd = Math.max(0, targetTopAlignedScroll - offset);
+      // Clamp to container bounds
+      const maxScroll = container.scrollHeight - container.clientHeight;
+      const end = Math.min(maxScroll, desiredEnd);
       const change = end - start;
       const startTime = performance.now();
       const easeInOut = (t)=> t<0.5 ? 2*t*t : -1+(4-2*t)*t;
@@ -351,7 +463,7 @@ document.addEventListener('DOMContentLoaded', function() {
         smoothOffsetScroll(modal, next, SCROLL_OFFSET_PX, SCROLL_DURATION_MS);
       } else {
         const summary = document.querySelector('.booking-summary');
-        if(summary) smoothOffsetScroll(modal, summary, Math.max(16, SCROLL_OFFSET_PX - 8), SCROLL_DURATION_MS);
+        if(summary) smoothOffsetScroll(modal, summary, Math.max(24, SCROLL_OFFSET_PX - 8), SCROLL_DURATION_MS);
       }
     }catch(e){
       if(typeof originalGoToStep === 'function') originalGoToStep(currentStep);
