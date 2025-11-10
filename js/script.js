@@ -283,55 +283,115 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ===== Product Hero Swiper =====
+    // ===== Product Hero Swiper (mobile only) =====
     const heroSwiperContainer = document.querySelector('.product-hero-swiper');
-    if (heroSwiperContainer && window.Swiper) {
-        const heroSwiper = new Swiper('.product-hero-swiper', {
-            slidesPerView: 1,
-            spaceBetween: 0,
-            loop: true,
-            speed: 400,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            // Enable bottom pagination bullets
-            pagination: {
-                el: '.product-hero-swiper .swiper-pagination',
-                clickable: true,
-            },
-        });
+    let heroSwiper = null;
 
-        // If thumbnail strip exists, keep its behavior; otherwise skip
-        const thumbs = document.querySelectorAll('.thumbs-strip img[data-index]');
-        if (thumbs.length) {
-            const setActiveThumb = (idx) => {
-                thumbs.forEach((t, i) => {
-                    if (i === idx) t.classList.add('active');
-                    else t.classList.remove('active');
-                });
-            };
+    function initHeroSwiperIfMobile() {
+        if (!heroSwiperContainer || !window.Swiper) return;
 
-            // init active state
-            setActiveThumb(heroSwiper.realIndex || 0);
-
-            // sync on swiper slide change
-            heroSwiper.on('slideChange', () => {
-                setActiveThumb(heroSwiper.realIndex);
+        const isMobile = window.matchMedia('(max-width: 991px)').matches;
+        if (isMobile && !heroSwiper) {
+            heroSwiper = new Swiper('.product-hero-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                speed: 400,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.product-hero-swiper .swiper-pagination',
+                    clickable: true,
+                },
             });
-
-            // click to navigate and set active
-            thumbs.forEach(thumb => {
-                thumb.addEventListener('click', () => {
-                    const idx = parseInt(thumb.getAttribute('data-index'), 10);
-                    if (!Number.isNaN(idx)) {
-                        heroSwiper.slideTo(idx);
-                        setActiveThumb(idx);
-                    }
-                });
-            });
+        } else if (!isMobile && heroSwiper) {
+            heroSwiper.destroy(true, true);
+            heroSwiper = null;
         }
     }
+
+    initHeroSwiperIfMobile();
+    window.addEventListener('resize', initHeroSwiperIfMobile);
+
+    // ===== Lightbox Gallery for hero images =====
+    (function() {
+        const modal = document.getElementById('galleryModal');
+        if (!modal) return;
+        const modalImg = modal.querySelector('img');
+        const counter = modal.querySelector('.gallery-counter');
+        const prevBtn = modal.querySelector('.prev-btn');
+        const nextBtn = modal.querySelector('.next-btn');
+        const closeBtn = modal.querySelector('.close-btn');
+
+        let sources = [];
+        let current = 0;
+
+        function collectSources() {
+            const gridEl = document.querySelector('.product-hero-grid');
+            const selector = gridEl
+                ? '.product-hero-grid .hero-gallery-item'
+                : '.product-hero-swiper .hero-gallery-item';
+            const images = document.querySelectorAll(selector);
+            sources = Array.from(images).map(img => img.src);
+
+            // Bind click on each image
+            images.forEach((img, idx) => {
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', () => open(idx));
+            });
+
+            // Show all photos buttons (desktop grid and mobile swiper)
+            const showAllButtons = document.querySelectorAll('.show-all-photos');
+            if (showAllButtons.length) {
+                showAllButtons.forEach(btn => {
+                    btn.addEventListener('click', () => open(0));
+                });
+            }
+        }
+
+        function open(index) {
+            if (!sources.length) collectSources();
+            current = index || 0;
+            update();
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function close() {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        function update() {
+            modalImg.src = sources[current];
+            if (counter) counter.textContent = (current + 1) + ' / ' + sources.length;
+        }
+
+        function next() { current = (current + 1) % sources.length; update(); }
+        function prev() { current = (current - 1 + sources.length) % sources.length; update(); }
+
+        if (prevBtn) prevBtn.addEventListener('click', prev);
+        if (nextBtn) nextBtn.addEventListener('click', next);
+        if (closeBtn) closeBtn.addEventListener('click', close);
+
+        // Close when clicking outside image
+        modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (!modal.classList.contains('active')) return;
+            if (e.key === 'Escape') close();
+            if (e.key === 'ArrowRight') next();
+            if (e.key === 'ArrowLeft') prev();
+        });
+
+        // Initialize sources
+        collectSources();
+    })();
 
     // ===== Trust Swiper (Vertical Badges) =====
     const trustSwiperEl = document.querySelector('.trust-swiper');

@@ -1,38 +1,15 @@
 // Booking Bottom Sheet Modal Logic
 document.addEventListener('DOMContentLoaded', function() {
-  const bookBtn = document.querySelector('.book-now-btn');
+  const bookBtns = document.querySelectorAll('.book-now-btn, .book-now-trigger');
   const overlay = document.getElementById('bookingModalOverlay');
   const modal = document.getElementById('bookingModal');
   const modalClose = document.getElementById('bookingModalClose');
 
   if (!overlay || !modal) return;
 
-  // --- Desktop relocation: place modal overlay inside product container ---
-  const originalParent = overlay.parentNode;
-  const originalNextSibling = overlay.nextSibling;
   function isDesktop(){
-    return window.matchMedia('(min-width: 1000px)').matches;
+    return window.matchMedia('(min-width: 992px)').matches;
   }
-  function placeModalAccordingToViewport(){
-    try{
-      const container = document.querySelector('.product-card-section .container');
-      if(isDesktop() && container && overlay.parentNode !== container){
-        container.appendChild(overlay);
-      } else if(!isDesktop() && overlay.parentNode !== originalParent){
-        // Return overlay to its original position for mobile bottom sheet behavior
-        if(originalNextSibling){
-          originalParent.insertBefore(overlay, originalNextSibling);
-        } else {
-          originalParent.appendChild(overlay);
-        }
-      }
-    }catch(e){
-      // no-op on failure
-    }
-  }
-  // Initial placement and respond to viewport changes
-  placeModalAccordingToViewport();
-  window.addEventListener('resize', placeModalAccordingToViewport);
 
   const steps = Array.from(document.querySelectorAll('.booking-step'));
   const dateInput = document.getElementById('bookingDate');
@@ -86,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function openModal() {
     overlay.classList.add('show');
-    // On mobile, prevent background scroll; on desktop sidebar allow page scroll
-    document.body.style.overflow = isDesktop() ? '' : 'hidden';
+    // Prevent background scroll on both mobile and desktop while modal is open
+    document.body.style.overflow = 'hidden';
     // reset and open the Options step first so user can choose
     steps.forEach(s => { s.classList.remove('collapsed', 'active'); });
     const optionsFirst = document.querySelector('.booking-step[data-step="options"]');
@@ -472,10 +449,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Radios removed; selection managed by state.option and button clicks
 
   // Open/Close bindings
-  if (bookBtn) {
-    bookBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      openModal();
+  if (bookBtns.length) {
+    bookBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal();
+      });
     });
   }
   if (modalClose) modalClose.addEventListener('click', closeModal);

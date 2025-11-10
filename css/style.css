@@ -47,7 +47,12 @@ a {
   color: var(--text-a-color);
   font-weight: 500;
 }
-
+button{
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+}
 h1,
 h2,
 h3,
@@ -2547,9 +2552,7 @@ header nav .nav_icons .mobile_menu_btn {
   right: 100px;
   width: 320px;
 }
-.tours .swiper {
-  padding: 0 20px;
-}
+
 
 .tours .tours_item {
   border-radius: 10px;

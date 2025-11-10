@@ -480,6 +480,8 @@
     </div>
   </div>
 
+  
+
   <!-- Mobile Cart Modal -->
   <div id="mobileCartModal" class="mobile-cart-modal">
     <div class="mobile-cart-content">
@@ -519,6 +521,272 @@
   </div>
 
 
+          <!-- Booking Bottom Sheet Modal -->
+  <div class="booking-modal-overlay" id="bookingModalOverlay">
+    <div class="booking-modal" id="bookingModal" role="dialog" aria-modal="true">
+      <div class="booking-modal-header">
+        <div class="booking-title-row">
+          <h3>Book Now</h3>
+          <span class="direct-booking-badge" aria-label="Book direct no whole seller or OTA commission"><i class="fas fa-shield-alt"></i> Direct Booking</span>
+        </div>
+        <button class="booking-modal-close" id="bookingModalClose" aria-label="Close">&times;</button>
+      </div>
+      <div class="booking-modal-content">
+        <!-- Step: Date -->
+        <div class="booking-step active" data-step="date">
+          <div class="step-header">
+            <div class="title-wrap">
+              <i class="fas fa-calendar-alt"></i>
+              <h4>Select Booking Date <span class="required">Required</span></h4>
+            </div>
+            <div class="selected-summary" aria-live="polite"></div>
+          </div>
+          <div class="step-body">
+            <input type="date" id="bookingDate" />
+            <p class="hint">Select any date from today up to 1 year ahead</p>
+          </div>
+        </div>
+
+        <!-- Step: Time -->
+        <div class="booking-step" data-step="time">
+          <div class="step-header">
+            <div class="title-wrap">
+              <i class="fas fa-clock"></i>
+              <h4>Select Start Time</h4>
+            </div>
+            <div class="selected-summary"></div>
+          </div>
+          <div class="step-body time-grid">
+            <button class="time-option" data-time="09:00">09:00</button>
+            <button class="time-option" data-time="12:00">12:00</button>
+            <button class="time-option" data-time="15:00">15:00</button>
+          </div>
+        </div>
+
+        <!-- Step: Language -->
+        <div class="booking-step" data-step="language">
+          <div class="step-header">
+            <div class="title-wrap">
+              <i class="fas fa-language"></i>
+              <h4>Select Guide Language</h4>
+            </div>
+            <div class="selected-summary"></div>
+          </div>
+          <div class="step-body lang-grid">
+            <button class="lang-option active" data-lang="English"><img src="img/language/gb.svg" alt="GB" /> GB
+              English</button>
+            <button class="lang-option" data-lang="German"><img src="img/language/de.svg" alt="DE" /> DE German</button>
+          </div>
+        </div>
+
+        <!-- Step: Options -->
+        <div class="booking-step" data-step="options">
+          <div class="step-header">
+            <div class="title-wrap">
+              <i class="fas fa-sliders-h"></i>
+              <h4>Options</h4>
+            </div>
+            <div class="selected-summary"></div>
+          </div>
+          <div class="step-body options-list">
+            <!-- Best Price option: expanded by default with details -->
+            <div class="option-card is-best selected" data-option="basic">
+              <input type="radio" name="tourOption" class="option-radio" value="basic" checked aria-label="Select this option">
+              <div class="option-header">
+                <div>
+                  <div class="badge-corner">Best Price</div>
+                  <div class="option-main">
+                    <div class="title">Without Entrance Fees to the Island</div>
+                  </div>
+                </div>
+                <div class="option-media">
+                  <img class="option-image" src="img/bghero.webp" alt="Option preview" />
+                </div>
+              </div>
+              <div class="option-body">
+                <div class="price-badges">
+                  <span class="price-badge">Adults: €17.50</span>
+                  <span class="price-badge">Children: €10.00</span>
+                </div>
+                <div class="option-footer">
+                  <button class="details-toggle" type="button"><i class="fas fa-chevron-down icon-toggle"
+                      style="transform: rotate(0deg);"></i> Show Details</button>
+                </div>
+                <div class="option-details">
+                  Join our Giftun Island Tour, where you can enjoy snorkeling and savor a delicious buffet lunch. Please
+                  note that the island entrance fee is not included.
+                </div>
+              </div>
+            </div>
+
+            <!-- Entrance fees option -->
+            <div class="option-card" data-option="entrance">
+              <input type="radio" name="tourOption" class="option-radio" value="entrance" aria-label="Select this option">
+              <div class="option-header">
+                <div class="option-main">
+                  <div class="title">With Island Entrance Fees</div>
+                </div>
+                <div class="option-media">
+                  <img class="option-image" src="img/bghero.webp" alt="Option preview" />
+                </div>
+              </div>
+              <div class="option-body">
+                <div class="price-badges">
+                  <span class="price-badge">Adults: €17.50</span>
+                  <span class="price-badge">Children: €10.00</span>
+                </div>
+                <div class="option-footer">
+                  <button class="details-toggle" type="button"><i class="fas fa-chevron-down icon-toggle"
+                      style="transform: rotate(0deg);"></i> Show Details</button>
+                </div>
+                <div class="option-details">
+                  Includes the island entrance fee in your total for a seamless experience.
+                </div>
+              </div>
+            </div>
+
+            <!-- Parasailing option -->
+            <div class="option-card" data-option="parasailing">
+              <input type="radio" name="tourOption" class="option-radio" value="parasailing" aria-label="Select this option">
+              <div class="option-header">
+                <div class="option-main">
+                  <div class="title">With Parasailing (10 Minutes)</div>
+                </div>
+                <div class="option-media">
+                  <img class="option-image" src="img/bghero.webp" alt="Option preview" />
+                </div>
+              </div>
+              <div class="option-body">
+                <div class="price-badges">
+                  <span class="price-badge">Adults: €17.50</span>
+                  <span class="price-badge">Children: €10.00</span>
+                </div>
+                <div class="option-footer">
+                  <button class="details-toggle" type="button"><i class="fas fa-chevron-down icon-toggle"
+                      style="transform: rotate(0deg);"></i> Show Details</button>
+                </div>
+                <div class="option-details">
+                  Add a thrilling 10-minute parasailing ride to your tour.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step: Participants -->
+        <div class="booking-step twohead" data-step="participants" data-noauto="true" data-restrict="child,infant">
+          <div class="step-header">
+            <div class="title-wrap">
+              <i class="fas fa-users"></i>
+              <h4>Number of Participants</h4>
+            </div>
+            <div class="selected-summary"></div>
+          </div>
+          <div class="step-body counters">
+            <div class="counter-row" data-type="adult">
+              <span class="label">Adults (12+ years)</span>
+              <div class="btns_counter">
+                <button class="counter-btn minus" type="button">-</button>
+                <span class="count">1</span>
+                <button class="counter-btn plus" type="button">+</button>
+              </div>
+            </div>
+            <div class="counter-row" data-type="child">
+              <span class="label">Children (3–11 years)</span>
+              <div class="btns_counter">
+                <button class="counter-btn minus" type="button">-</button>
+                <span class="count">0</span>
+                <button class="counter-btn plus" type="button">+</button>
+              </div>
+            </div>
+            <div class="counter-row" data-type="infant">
+              <span class="label">Infants (0–2 years)</span>
+              <div class="btns_counter">
+                <button class="counter-btn minus" type="button">-</button>
+                <span class="count">0</span>
+                <button class="counter-btn plus" type="button">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step: Addons -->
+        <div class="booking-step twohead" data-step="addons" data-sticky="true">
+          <div class="step-header">
+            <div class="title-wrap">
+              <i class="fas fa-plus-circle"></i>
+              <h4>Add-ons</h4>
+            </div>
+            <div class="selected-summary"></div>
+          </div>
+          <div class="step-body addons-list">
+            <!-- Addon: Photo Package -->
+            <div class="addon-item" data-addon="photo" data-price="12">
+              <div class="addon-header">
+                <div class="addon-info">
+                  <span class="addon-name">Professional Photo Package</span>
+                  <small class="addon-desc">Capture unforgettable moments with professional photos during your tour
+                    today.</small>
+                </div>
+                <div class="addon-media">
+                  <img class="addon-image" src="img/photo_6813975525858.webp" alt="Photo package" />
+                </div>
+              </div>
+              <div class="addon-footer">
+                <p>Per item <span class="addon-price">€12</span></p>
+                <div class="addon-qty">
+                  <button class="counter-btn minus" type="button">-</button>
+                  <span class="qty-count">0</span>
+                  <button class="counter-btn plus" type="button">+</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Addon: Protective Goggles -->
+            <div class="addon-item" data-addon="goggles" data-price="5">
+              <div class="addon-header">
+                <div class="addon-info">
+                  <span class="addon-name">Protective Goggles</span>
+                  <small class="addon-desc">Protect your eyes with comfy goggles during adventurous activities
+                    safely.</small>
+                </div>
+                <div class="addon-media">
+                  <img class="addon-image" src="img/photo_6813975525858.webp" alt="Protective goggles" />
+                </div>
+              </div>
+              <div class="addon-footer">
+                <p>Per item <span class="addon-price">€5</span></p>
+                <div class="addon-qty">
+                  <button class="counter-btn minus" type="button">-</button>
+                  <span class="qty-count">0</span>
+                  <button class="counter-btn plus" type="button">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="booking-summary">
+          <div id="bookingDetails" class="summary-details"></div>
+        <p class="flexible_secure"><i class="fas fa-lock"></i> Flexible and Secure Online Payment - cash Payment Available</p>
+        </div>
+        <div class="booking-summary sticky_bottom_booking">
+          <div class="summary-line">
+            <span>Total</span>
+            <strong id="bookingTotal">€17.50</strong>
+          </div>
+          <div class="btns">
+            <button class="confirm-booking-btn btn" type="button">Confirm Booking <i
+                class="fas fa-arrow-right"></i></button>
+            <button class="check-out btn">Add to Cart & Continue shopping</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
   <!-- Product Details Card Section (Mobile-first) -->
   <section class="product-card-section">
@@ -526,43 +794,68 @@
       <div class="product-card">
         <!-- Hero Swiper with overlay controls -->
         <div class="product-hero slide-up">
+          <!-- Mobile Swiper -->
           <div class="swiper product-hero-swiper">
             <div class="swiper-wrapper">
               <div class="swiper-slide">
-                <img src="https://egyptra.pro/uploads/photo_library/photo_16584a4b3e1a2e15.webp"
+                <img class="hero-gallery-item" src="img/photo_6813975525858.webp"
                   alt="HarborHaven Hideaway" />
               </div>
               <div class="swiper-slide">
-                <img src="https://egyptra.pro/uploads/photo_library/photo_26651490fa56e84d.webp"
+                <img class="hero-gallery-item" src="img/photo_6895eb6fe7019.webp"
                   alt="HarborHaven Hideaway" />
               </div>
               <div class="swiper-slide">
-                <img src="https://egyptra.pro/uploads/photo_library/photo_c5392991be2cb97c.webp"
+                <img class="hero-gallery-item" src="img/photo_11df39f20c4c2874.webp"
                   alt="HarborHaven Hideaway" />
               </div>
               <div class="swiper-slide">
-                <img src="https://egyptra.pro/uploads/photo_library/photo_6e30fa416a6c18a5.webp"
+                <img class="hero-gallery-item" src="img/photo_67bc30811b730.jpg"
                   alt="HarborHaven Hideaway" />
               </div>
               <div class="swiper-slide">
-                <img src="https://egyptra.pro/uploads/photo_library/photo_a1aff22943815081.webp"
+                <img class="hero-gallery-item" src="img/bghero.webp"
                   alt="HarborHaven Hideaway" />
               </div>
             </div>
             <div class="swiper-pagination"></div>
+            <!-- Mobile Show All Photos button -->
+            <button class="show-all-photos" type="button" aria-label="Show all photos">
+              <i class="fas fa-images"></i>
+              <span>Show all photos</span>
+            </button>
+          </div>
+
+          <!-- Desktop Split Gallery -->
+          <div class="product-hero-grid" aria-label="Hero gallery">
+            <div class="grid-item main">
+              <img class="hero-gallery-item" src="img/photo_6813975525858.webp" alt="Tour photo main" />
+              <button class="show-all-photos" type="button" aria-label="Show all photos">
+                <i class="fas fa-images"></i>
+                <span>Show all photos</span>
+              </button>
+            </div>
+            <div class="grid-item">
+              <img class="hero-gallery-item" src="img/photo_6895eb6fe7019.webp" alt="Tour photo" />
+            </div>
+            <div class="grid-item">
+              <img class="hero-gallery-item" src="img/photo_11df39f20c4c2874.webp" alt="Tour photo" />
+            </div>
+            <div class="grid-item">
+              <img class="hero-gallery-item" src="img/photo_67bc30811b730.jpg" alt="Tour photo" />
+            </div>
+            <div class="grid-item">
+              <img class="hero-gallery-item" src="img/bghero.webp" alt="Tour photo" />
+            </div>
           </div>
           <div class="top-actions">
             <button class="icon-btn back" aria-label="Back">
               <i class="fas fa-arrow-left"></i>
             </button>
-            <div class="right-icons">
-              <button class="icon-btn share" aria-label="Share">
-                <i class="fas fa-paper-plane"></i>
-              </button>
-              <button class="icon-btn fav" aria-label="Favorite">
-                <i class="far fa-heart"></i>
-              </button>
-            </div>
+            <button class="book-now-trigger" type="button" aria-label="Open booking">
+              <i class="fas fa-calendar-check"></i>
+              <span>Book Now</span>
+            </button>
           </div>
           <!-- Floating Share Button (bottom-right of hero) -->
           <div class="floating-share">
@@ -587,6 +880,17 @@
                 <span>Copy Link</span>
               </button>
             </div>
+          </div>
+        </div>
+
+        <!-- Gallery Modal (Lightbox) -->
+        <div id="galleryModal" class="gallery-modal" aria-hidden="true" role="dialog" aria-label="Image gallery">
+          <div class="gallery-inner">
+            <button class="close-btn" aria-label="Close gallery"><i class="fas fa-times"></i></button>
+            <button class="prev-btn" aria-label="Previous photo"><i class="fas fa-chevron-left"></i></button>
+            <img src="" alt="Gallery image" />
+            <button class="next-btn" aria-label="Next photo"><i class="fas fa-chevron-right"></i></button>
+            <div class="gallery-counter" aria-live="polite"></div>
           </div>
         </div>
 
@@ -970,270 +1274,6 @@
         </div>
 
       </div>
-
-
-        <!-- Booking Bottom Sheet Modal -->
-  <div class="booking-modal-overlay" id="bookingModalOverlay">
-    <div class="booking-modal" id="bookingModal" role="dialog" aria-modal="true">
-      <div class="booking-modal-header">
-        <div class="booking-title-row">
-          <h3>Book Now</h3>
-          <span class="direct-booking-badge" aria-label="Book direct no whole seller or OTA commission"><i class="fas fa-shield-alt"></i> Direct Booking</span>
-        </div>
-        <button class="booking-modal-close" id="bookingModalClose" aria-label="Close">&times;</button>
-      </div>
-      <div class="booking-modal-content">
-        <!-- Step: Date -->
-        <div class="booking-step active" data-step="date">
-          <div class="step-header">
-            <div class="title-wrap">
-              <i class="fas fa-calendar-alt"></i>
-              <h4>Select Booking Date <span class="required">Required</span></h4>
-            </div>
-            <div class="selected-summary" aria-live="polite"></div>
-          </div>
-          <div class="step-body">
-            <input type="date" id="bookingDate" />
-            <p class="hint">Select any date from today up to 1 year ahead</p>
-          </div>
-        </div>
-
-        <!-- Step: Time -->
-        <div class="booking-step" data-step="time">
-          <div class="step-header">
-            <div class="title-wrap">
-              <i class="fas fa-clock"></i>
-              <h4>Select Start Time</h4>
-            </div>
-            <div class="selected-summary"></div>
-          </div>
-          <div class="step-body time-grid">
-            <button class="time-option" data-time="09:00">09:00</button>
-            <button class="time-option" data-time="12:00">12:00</button>
-            <button class="time-option" data-time="15:00">15:00</button>
-          </div>
-        </div>
-
-        <!-- Step: Language -->
-        <div class="booking-step" data-step="language">
-          <div class="step-header">
-            <div class="title-wrap">
-              <i class="fas fa-language"></i>
-              <h4>Select Guide Language</h4>
-            </div>
-            <div class="selected-summary"></div>
-          </div>
-          <div class="step-body lang-grid">
-            <button class="lang-option active" data-lang="English"><img src="img/language/gb.svg" alt="GB" /> GB
-              English</button>
-            <button class="lang-option" data-lang="German"><img src="img/language/de.svg" alt="DE" /> DE German</button>
-          </div>
-        </div>
-
-        <!-- Step: Options -->
-        <div class="booking-step" data-step="options">
-          <div class="step-header">
-            <div class="title-wrap">
-              <i class="fas fa-sliders-h"></i>
-              <h4>Options</h4>
-            </div>
-            <div class="selected-summary"></div>
-          </div>
-          <div class="step-body options-list">
-            <!-- Best Price option: expanded by default with details -->
-            <div class="option-card is-best selected" data-option="basic">
-              <input type="radio" name="tourOption" class="option-radio" value="basic" checked aria-label="Select this option">
-              <div class="option-header">
-                <div>
-                  <div class="badge-corner">Best Price</div>
-                  <div class="option-main">
-                    <div class="title">Without Entrance Fees to the Island</div>
-                  </div>
-                </div>
-                <div class="option-media">
-                  <img class="option-image" src="img/bghero.webp" alt="Option preview" />
-                </div>
-              </div>
-              <div class="option-body">
-                <div class="price-badges">
-                  <span class="price-badge">Adults: €17.50</span>
-                  <span class="price-badge">Children: €10.00</span>
-                </div>
-                <div class="option-footer">
-                  <button class="details-toggle" type="button"><i class="fas fa-chevron-down icon-toggle"
-                      style="transform: rotate(0deg);"></i> Show Details</button>
-                </div>
-                <div class="option-details">
-                  Join our Giftun Island Tour, where you can enjoy snorkeling and savor a delicious buffet lunch. Please
-                  note that the island entrance fee is not included.
-                </div>
-              </div>
-            </div>
-
-            <!-- Entrance fees option -->
-            <div class="option-card" data-option="entrance">
-              <input type="radio" name="tourOption" class="option-radio" value="entrance" aria-label="Select this option">
-              <div class="option-header">
-                <div class="option-main">
-                  <div class="title">With Island Entrance Fees</div>
-                </div>
-                <div class="option-media">
-                  <img class="option-image" src="img/bghero.webp" alt="Option preview" />
-                </div>
-              </div>
-              <div class="option-body">
-                <div class="price-badges">
-                  <span class="price-badge">Adults: €17.50</span>
-                  <span class="price-badge">Children: €10.00</span>
-                </div>
-                <div class="option-footer">
-                  <button class="details-toggle" type="button"><i class="fas fa-chevron-down icon-toggle"
-                      style="transform: rotate(0deg);"></i> Show Details</button>
-                </div>
-                <div class="option-details">
-                  Includes the island entrance fee in your total for a seamless experience.
-                </div>
-              </div>
-            </div>
-
-            <!-- Parasailing option -->
-            <div class="option-card" data-option="parasailing">
-              <input type="radio" name="tourOption" class="option-radio" value="parasailing" aria-label="Select this option">
-              <div class="option-header">
-                <div class="option-main">
-                  <div class="title">With Parasailing (10 Minutes)</div>
-                </div>
-                <div class="option-media">
-                  <img class="option-image" src="img/bghero.webp" alt="Option preview" />
-                </div>
-              </div>
-              <div class="option-body">
-                <div class="price-badges">
-                  <span class="price-badge">Adults: €17.50</span>
-                  <span class="price-badge">Children: €10.00</span>
-                </div>
-                <div class="option-footer">
-                  <button class="details-toggle" type="button"><i class="fas fa-chevron-down icon-toggle"
-                      style="transform: rotate(0deg);"></i> Show Details</button>
-                </div>
-                <div class="option-details">
-                  Add a thrilling 10-minute parasailing ride to your tour.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step: Participants -->
-        <div class="booking-step twohead" data-step="participants" data-noauto="true" data-restrict="child,infant">
-          <div class="step-header">
-            <div class="title-wrap">
-              <i class="fas fa-users"></i>
-              <h4>Number of Participants</h4>
-            </div>
-            <div class="selected-summary"></div>
-          </div>
-          <div class="step-body counters">
-            <div class="counter-row" data-type="adult">
-              <span class="label">Adults (12+ years)</span>
-              <div class="btns_counter">
-                <button class="counter-btn minus" type="button">-</button>
-                <span class="count">1</span>
-                <button class="counter-btn plus" type="button">+</button>
-              </div>
-            </div>
-            <div class="counter-row" data-type="child">
-              <span class="label">Children (3–11 years)</span>
-              <div class="btns_counter">
-                <button class="counter-btn minus" type="button">-</button>
-                <span class="count">0</span>
-                <button class="counter-btn plus" type="button">+</button>
-              </div>
-            </div>
-            <div class="counter-row" data-type="infant">
-              <span class="label">Infants (0–2 years)</span>
-              <div class="btns_counter">
-                <button class="counter-btn minus" type="button">-</button>
-                <span class="count">0</span>
-                <button class="counter-btn plus" type="button">+</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step: Addons -->
-        <div class="booking-step twohead" data-step="addons" data-sticky="true">
-          <div class="step-header">
-            <div class="title-wrap">
-              <i class="fas fa-plus-circle"></i>
-              <h4>Add-ons</h4>
-            </div>
-            <div class="selected-summary"></div>
-          </div>
-          <div class="step-body addons-list">
-            <!-- Addon: Photo Package -->
-            <div class="addon-item" data-addon="photo" data-price="12">
-              <div class="addon-header">
-                <div class="addon-info">
-                  <span class="addon-name">Professional Photo Package</span>
-                  <small class="addon-desc">Capture unforgettable moments with professional photos during your tour
-                    today.</small>
-                </div>
-                <div class="addon-media">
-                  <img class="addon-image" src="img/photo_6813975525858.webp" alt="Photo package" />
-                </div>
-              </div>
-              <div class="addon-footer">
-                <p>Per item <span class="addon-price">€12</span></p>
-                <div class="addon-qty">
-                  <button class="counter-btn minus" type="button">-</button>
-                  <span class="qty-count">0</span>
-                  <button class="counter-btn plus" type="button">+</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Addon: Protective Goggles -->
-            <div class="addon-item" data-addon="goggles" data-price="5">
-              <div class="addon-header">
-                <div class="addon-info">
-                  <span class="addon-name">Protective Goggles</span>
-                  <small class="addon-desc">Protect your eyes with comfy goggles during adventurous activities
-                    safely.</small>
-                </div>
-                <div class="addon-media">
-                  <img class="addon-image" src="img/photo_6813975525858.webp" alt="Protective goggles" />
-                </div>
-              </div>
-              <div class="addon-footer">
-                <p>Per item <span class="addon-price">€5</span></p>
-                <div class="addon-qty">
-                  <button class="counter-btn minus" type="button">-</button>
-                  <span class="qty-count">0</span>
-                  <button class="counter-btn plus" type="button">+</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Summary -->
-        <div class="booking-summary">
-          <div id="bookingDetails" class="summary-details"></div>
-          <p class="flexible_secure"><i class="fas fa-lock"></i> Flexible and Secure Online Payment - cash Payment Available</p>
-          <div class="summary-line">
-            <span>Total</span>
-            <strong id="bookingTotal">€17.50</strong>
-          </div>
-          <div class="btns">
-            <button class="confirm-booking-btn btn" type="button">Confirm Booking <i
-                class="fas fa-arrow-right"></i></button>
-            <button class="check-out btn">Add to Cart & Continue shopping</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
 

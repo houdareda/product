@@ -141,12 +141,17 @@
 .booking-modal-close {
   background: transparent;
   border: none;
-  font-size: 22px;
+  font-size: 28px;
   line-height: 1;
   cursor: pointer;
   color: #333;
   position: relative;
   z-index: 3;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .booking-step {
@@ -170,12 +175,15 @@
   flex-direction: column;
   align-items: start;
 }
+.booking-step.twohead .step-header .selected-summary{
+  width: 100%;
+}
 .booking-step .title-wrap {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-  width: 100%;
+  width: max-content;
 }
 .booking-step .step-header h4 {
   margin: 0;
@@ -367,9 +375,12 @@
 .booking-summary {
   position: relative;
   background: #fff;
-  border-top: 1px solid #eee;
   padding: 12px;
   border-radius: 12px;
+}
+.booking-summary.sticky_bottom_booking{
+  border-top: 1px solid #eee;
+  border-radius: 0;
 }
 .booking-summary .flexible_secure {
   font-size: 12px;
@@ -689,6 +700,7 @@
   width: 100%;
   text-transform: capitalize;
   font-size: 14px;
+  
 }
 
 /* --- Addons enhanced layout --- */
@@ -910,6 +922,158 @@ section.product-card-section {
 .product-meta .top_produt_meta .duration {
   font-size: 13px;
 }
+
+/* ================================
+   Desktop Split Gallery (Hero)
+   ================================ */
+@media (min-width: 992px) {
+  .product-hero-grid {
+    display: grid;
+    /* 1 عمود كبير على اليسار + عمودين للمصغرات على اليمين */
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: repeat(2, 260px);
+    gap: 12px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .product-hero-grid .grid-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .product-hero-grid .main {
+    grid-row: 1 / span 2;
+    /* يظل في العمود الأول تلقائياً */
+  }
+  .product-hero-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  /* Hide mobile swiper on desktop */
+  .product-hero-swiper { display: none !important; }
+
+  .product-hero-grid .show-all-photos {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: #333;
+    padding: 10px 14px;
+    border-radius: 24px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+  .product-hero-grid .show-all-photos i {
+    color: var(--primary-color);
+  }
+}
+
+/* Mobile: show swiper, hide grid */
+@media (max-width: 991px) {
+  .product-hero-grid { display: none; }
+  .product-hero-swiper { display: block; position: relative; }
+
+  /* Mobile Show All Photos button inside swiper */
+  .product-hero-swiper .show-all-photos {
+    position: absolute;
+    right: auto;
+    left: 16px;
+    bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: #333;
+    padding: 10px 14px;
+    border-radius: 24px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    z-index: 5;
+  }
+  .product-hero-swiper .show-all-photos i { color: var(--primary-color); }
+}
+
+/* ================================
+   Lightbox Gallery Modal
+   ================================ */
+.gallery-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.86);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.gallery-modal.active { display: flex; }
+.gallery-modal .gallery-inner {
+  position: relative;
+  max-width: 92vw;
+  max-height: 88vh;
+}
+.gallery-modal img {
+  max-width: 92vw;
+  max-height: 88vh;
+  border-radius: 8px;
+  object-fit: contain;
+}
+.gallery-modal .close-btn {
+  position: absolute;
+  top: -44px;
+  right: -6px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+.gallery-modal .prev-btn,
+.gallery-modal .next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+.gallery-modal .prev-btn { left: -54px; }
+.gallery-modal .next-btn { right: -54px; }
+.gallery-modal .gallery-counter {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 6px 10px;
+  border-radius: 12px;
+}
+@media (max-width: 520px) {
+  .gallery-modal .prev-btn { left: 8px; }
+  .gallery-modal .next-btn { right: 8px; }
+  .gallery-modal .close-btn { top: 8px; right: 8px; }
+  .gallery-modal .gallery-counter { bottom: 8px; }
+}
 .price_discount {
   display: flex;
   align-items: center;
@@ -1065,6 +1229,28 @@ section.product-card-section {
     border: 1px solid #eee;
     border-radius: 14px;
   }
+  /* Desktop Book Now trigger in hero top actions */
+  .product-hero .top-actions .book-now-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    z-index: 3;
+  }
+}
+
+/* Hide desktop trigger on mobile */
+@media (max-width: 991px) {
+  .product-hero .top-actions .book-now-trigger { display: none; }
 }
 
 /* Reviews */
@@ -1715,10 +1901,18 @@ section.product-card-section {
   background: #fff;
   border: 1px solid #e6e8ec;
   border-radius: 0 0 8px 8px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 16px rgba(124, 124, 124, 0.06);
   padding: 26px 16px 16px;
   width: 100%;
   margin-bottom: 25px;
+  position: relative;
+  top: 0;
+  transition: 0.3s ease-in-out;
+}
+.verified-card:hover{
+  top: -15px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+
 }
 .verified-card::before {
   content: "";
@@ -1727,8 +1921,6 @@ section.product-card-section {
   left: 0;
   right: 0;
   height: 4px;
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
 }
 .verified-card.google::before {
   background: linear-gradient(90deg, #4285f4, #34a853, #fbbc05, #ea4335);
@@ -1900,42 +2092,41 @@ section.product-card-section {
     border-radius: 8px;
   }
   .product-card-section .container {
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
+    display: block;
+    gap: 0;
+    align-items: unset;
   }
   .product-card-section .product-card {
     flex: 1 1 auto;
   }
   .booking-modal-overlay {
-    position: sticky;
-    top: 24px;
-    inset: unset;
-    background: transparent;
-    opacity: 1;
-    visibility: visible;
-    z-index: auto;
-    flex: 0 0 420px;
-    max-width: 400px;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 9999;
   }
   .booking-modal {
-    position: relative;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
     left: auto;
-    right: auto;
-    bottom: auto;
-    width: 100%;
-    transform: none;
-    border-radius: 12px;
-    box-shadow: 0 6px 24px rgba(136, 136, 136, 0.1);
-    max-height: calc(100vh - 48px);
-    overflow: auto;
-    height: auto;
+    width: min(450px, 95vw);
+    transform: translateX(100%);
+    border-radius: 0;
+    box-shadow: -12px 0 28px rgba(0, 0, 0, 0.18);
+    height: 100vh;
     max-height: none;
-    border: 1px solid #e4e4e4a2;
+    overflow: auto;
+    border-left: 1px solid #e4e4e4a2;
+    padding-bottom: 0;
   }
   .booking-modal-overlay.show .booking-modal {
-    transform: none;
+    transform: translateX(0);
   }
+
   .product-card .swiper-slide{
     height: 500px;
   }
@@ -1970,9 +2161,7 @@ section.product-card-section {
 .expect-toggle{
   font-size: 22px;
 }
-.mobile-cta{
-  display: none;
-}
+
 .faq-section{
   padding: 70px 0;
 }
@@ -1993,7 +2182,7 @@ section.product-card-section {
 }
 .faq-section .faq-category-container{
   width: 48%;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 .verified-card{
   width: 32%;
@@ -2019,5 +2208,27 @@ section.product-card-section {
 }
 .faq-question .q-text{
   font-size: 16px;
+}
+.booking-step .selected-summary{
+  max-width: 40%;
+}
+.booking-step.twohead .selected-summary{
+  width: 100%;
+  max-width: 100%;
+}
+.booking-modal-header{
+  padding-top: 25px;
+  padding-bottom: 15px;  box-shadow: 0px -5px 8px #0000000a;
+}
+.booking-summary.sticky_bottom_booking{
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  box-shadow: 0px -5px 8px #0000000a;
+}
+.booking-step,
+.booking-summary{
+  padding: 18px 25px;
 }
 }
