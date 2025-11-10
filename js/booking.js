@@ -7,12 +7,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (!overlay || !modal) return;
 
+  // --- Desktop relocation: place modal overlay inside product container ---
+  const originalParent = overlay.parentNode;
+  const originalNextSibling = overlay.nextSibling;
+  function isDesktop(){
+    return window.matchMedia('(min-width: 1000px)').matches;
+  }
+  function placeModalAccordingToViewport(){
+    try{
+      const container = document.querySelector('.product-card-section .container');
+      if(isDesktop() && container && overlay.parentNode !== container){
+        container.appendChild(overlay);
+      } else if(!isDesktop() && overlay.parentNode !== originalParent){
+        // Return overlay to its original position for mobile bottom sheet behavior
+        if(originalNextSibling){
+          originalParent.insertBefore(overlay, originalNextSibling);
+        } else {
+          originalParent.appendChild(overlay);
+        }
+      }
+    }catch(e){
+      // no-op on failure
+    }
+  }
+  // Initial placement and respond to viewport changes
+  placeModalAccordingToViewport();
+  window.addEventListener('resize', placeModalAccordingToViewport);
+
   const steps = Array.from(document.querySelectorAll('.booking-step'));
   const dateInput = document.getElementById('bookingDate');
   const timeOptions = Array.from(document.querySelectorAll('.time-option'));
   const langOptions = Array.from(document.querySelectorAll('.lang-option'));
   const optionCards = Array.from(document.querySelectorAll('.option-card'));
-  const selectButtons = Array.from(document.querySelectorAll('.option-card .select-option-btn'));
+  const optionRadios = Array.from(document.querySelectorAll('.option-card .option-radio'));
   const totalEl = document.getElementById('bookingTotal');
   const detailsEl = document.getElementById('bookingDetails');
   const confirmBtn = document.querySelector('.confirm-booking-btn');
@@ -21,6 +48,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const counters = Array.from(document.querySelectorAll('.counter-row'));
   const addonItems = Array.from(document.querySelectorAll('.addons-list .addon-item'));
+
+  // Read per-tour participant restrictions (e.g., "child,infant") from HTML
+  const participantsStep = document.querySelector('.booking-step[data-step="participants"]');
+  const restrictedTypes = (participantsStep?.dataset.restrict || '')
+    .split(',')
+    .map(s => s.trim().toLowerCase())
+    .filter(Boolean);
 
   const state = {
     date: null,
@@ -37,19 +71,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
+  // Build participants summary text based on restrictions
+  function buildParticipantsSummary(){
+    const parts = [];
+    parts.push(`Adults ${state.participants.adults}`);
+    if(!restrictedTypes.includes('child')) {
+      parts.push(`Children ${state.participants.children}`);
+    }
+    if(!restrictedTypes.includes('infant')) {
+      parts.push(`Infants ${state.participants.infants}`);
+    }
+    return parts.join(' · ');
+  }
+
   function openModal() {
     overlay.classList.add('show');
-    document.body.style.overflow = 'hidden';
-    // reset to first step
+    // On mobile, prevent background scroll; on desktop sidebar allow page scroll
+    document.body.style.overflow = isDesktop() ? '' : 'hidden';
+    // reset and open the Options step first so user can choose
     steps.forEach(s => { s.classList.remove('collapsed', 'active'); });
-    const first = document.querySelector('.booking-step[data-step="date"]');
-    if (first) first.classList.add('active');
+    const optionsFirst = document.querySelector('.booking-step[data-step="options"]');
+    if (optionsFirst) optionsFirst.classList.add('active');
     updateMinMaxDates();
     updateTotal();
   }
 
   function closeModal() {
     overlay.classList.remove('show');
+    // Restore scroll only for mobile bottom sheet
     document.body.style.overflow = '';
   }
 
@@ -254,27 +303,41 @@ document.addEventListener('DOMContentLoaded', function() {
     const title = t ? t.textContent.trim() : opt;
     const stepEl = document.querySelector('.booking-step[data-step="options"]');
     setSummary(stepEl, title);
+    // Update heading to indicate a selection has been made
+    const headingEl = stepEl?.querySelector('.title-wrap h4');
+    if (headingEl) headingEl.textContent = 'Selected Option';
+    // Collapse the options step once the user makes a selection
+    if (stepEl) {
+      stepEl.classList.add('collapsed');
+      stepEl.classList.remove('active');
+    }
     goToStep('participants');
     updateTotal();
-    updateSelectButtons();
+    updateOptionSelectionUI();
   }
-
-  function updateSelectButtons(){
+  function updateOptionSelectionUI(){
     document.querySelectorAll('.option-card').forEach(card => {
-      const btn = card.querySelector('.select-option-btn');
-      if(!btn) return;
       const isSelected = (card.dataset.option === state.option);
-      btn.innerHTML = isSelected ? '<i class="fas fa-check"></i> Selected' : 'Select';
-      btn.disabled = isSelected;
       card.classList.toggle('selected', isSelected);
+      const radio = card.querySelector('.option-radio');
+      if(radio){
+        radio.checked = isSelected;
+      }
     });
   }
 
-  // Select button behavior: choose the option card (no radios)
-  selectButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const card = btn.closest('.option-card');
+  // Radio behavior: choose the option card
+  optionRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      const card = radio.closest('.option-card');
+      selectOption(card);
+    });
+  });
+  // Clicking anywhere on the card (except details toggle) selects the option
+  optionCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if(e.target.closest('.details-toggle')) return; // don't hijack details toggle
+      if(e.target.closest('.option-radio')) return;   // radio already handles
       selectOption(card);
     });
   });
@@ -287,8 +350,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const title = t ? t.textContent.trim() : state.option;
     const stepEl = document.querySelector('.booking-step[data-step="options"]');
     setSummary(stepEl, title);
+    const headingEl = stepEl?.querySelector('.title-wrap h4');
+    if (headingEl) headingEl.textContent = 'Selected Option :';
+    // Ensure Options step is open initially on desktop and mobile
+    if (stepEl) {
+      stepEl.classList.remove('collapsed');
+      stepEl.classList.add('active');
+    }
   }
-  updateSelectButtons();
+  updateOptionSelectionUI();
 
   // Participants counters
   counters.forEach(row => {
@@ -299,11 +369,19 @@ document.addEventListener('DOMContentLoaded', function() {
     function setCount(n) {
       countEl.textContent = String(n);
       state.participants[type === 'adult' ? 'adults' : type === 'child' ? 'children' : 'infants'] = n;
-      const summaryText = `Adults ${state.participants.adults} · Children ${state.participants.children} · Infants ${state.participants.infants}`;
+      const summaryText = buildParticipantsSummary();
       const stepEl = document.querySelector('.booking-step[data-step="participants"]');
       // Keep participants open and DO NOT auto-scroll to next step
       setSummary(stepEl, summaryText, { collapse: false });
       updateTotal();
+    }
+
+    // If this participant type is restricted for the current tour, lock the row
+    if (restrictedTypes.includes(type) && type !== 'adult') {
+      // Hide the entire row when children/infants are not permitted
+      row.remove();
+      // Ensure state remains zero for this type (already default)
+      return; // skip binding events entirely
     }
     minus.addEventListener('click', () => {
       const current = parseInt(countEl.textContent || '0', 10);
@@ -316,6 +394,33 @@ document.addEventListener('DOMContentLoaded', function() {
       setCount(current + 1);
     });
   });
+
+  // After initializing counters, update summary to reflect current visibility/restrictions
+  (function(){
+    const stepEl = document.querySelector('.booking-step[data-step="participants"]');
+    if(stepEl){
+      setSummary(stepEl, buildParticipantsSummary(), { collapse: false });
+    }
+  })();
+
+  // Inject a simple English notice above the counters when restrictions apply
+  if (participantsStep && restrictedTypes.length) {
+    const body = participantsStep.querySelector('.step-body.counters');
+    if (body) {
+      // English labels and message, dynamically based on restricted types
+      const labelsMap = { child: 'Children', infant: 'Infants' };
+      const humanList = restrictedTypes
+        .filter(t => t !== 'adult')
+        .map(t => labelsMap[t] || (t.charAt(0).toUpperCase() + t.slice(1)));
+      const message = humanList.length === 1
+        ? `${humanList[0]} are not permitted on this tour.`
+        : `${humanList.join(' and ')} are not permitted on this tour.`;
+      const note = document.createElement('div');
+      note.className = 'restriction-note';
+      note.textContent = message;
+      body.prepend(note);
+    }
+  }
 
   // Addons quantity counters
   addonItems.forEach(item => {

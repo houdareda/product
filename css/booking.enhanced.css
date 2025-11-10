@@ -10,7 +10,7 @@
 
 .booking-step {
   margin: 16px;
-  border-radius: 14px;
+  border-radius: 8px;
   box-shadow: 0 2px 8px rgba(17, 24, 39, 0.04);
   /* يجعل التمرير عبر scrollIntoView يتوقف قبل بداية القسم بمسافة ثابتة */
   scroll-margin-top: 64px;
@@ -63,13 +63,21 @@
 }
 .option-card {
   border-radius: 10px;
-  padding: 18px 15px;
+  padding: 24px 15px 15px;
   background: #fff;
   margin-bottom: 18px;
   position: relative;
   border: 1px solid #d6d6d681;
   overflow: hidden;
     box-shadow: 0 4px 10px rgba(52, 126, 211, 0.048);
+}
+.option-card .option-radio{
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  width: 14px;
+  height: 14px;
+  accent-color: var(--primary-color);
 }
 .option-card.selected {
   box-shadow: 0 4px 14px rgba(35, 116, 209, 0.425);
@@ -213,10 +221,7 @@
   margin-bottom: 5px;
 }
 
-.counters .counter-row {
-  gap: 8px;
-  border-radius: 14px;
-}
+
 .counters .btns_counter{
   display: flex;
   align-items: center;
@@ -240,7 +245,7 @@
 }
 .booking-modal-overlay .confirm-booking-btn {
   padding: 14px 0;
-  border-radius: 12px;
+  border-radius: 8px;
   font-weight: 700;
   width: 100%;
 }
@@ -266,7 +271,7 @@
   gap: 10px;
   padding: 14px;
   border: 1px dashed #e5e7eb;
-  border-radius: 16px;
+  border-radius: 8px;
   background: #fff;
 }
 .addons-list .addon-header {

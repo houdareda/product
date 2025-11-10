@@ -63,6 +63,37 @@ window.copyLink = function(e, url) {
     });
 };
 
+// Share to social platforms
+window.shareTo = function(e, platform) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var url = window.location.href;
+    var titleEl = document.querySelector('.product-title');
+    var text = titleEl ? titleEl.textContent.trim() : document.title || 'Check this tour';
+
+    var shareUrl = '';
+    if (platform === 'facebook') {
+        shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
+    } else if (platform === 'twitter') {
+        shareUrl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text);
+    } else if (platform === 'whatsapp') {
+        // Works on mobile and desktop
+        shareUrl = 'https://wa.me/?text=' + encodeURIComponent(text + ' ' + url);
+    }
+
+    if (shareUrl) {
+        window.open(shareUrl, '_blank', 'noopener');
+        // Close dropdown after action
+        var btn = e.target.closest('.btn_share');
+        var dropdown = btn ? btn.nextElementSibling : null;
+        if (dropdown) {
+            dropdown.classList.remove('active');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+    }
+};
+
 // Close dropdowns when clicking outside
 document.addEventListener('click', function(e) {
     if (!e.target.closest('.btn_share') && !e.target.closest('.share-dropdown')) {
@@ -110,8 +141,8 @@ document.addEventListener('DOMContentLoaded', function() {
         breakpoints: {
             // Mobile (up to 767px): 1 slide
             0: {
-                slidesPerView: 2,
-                spaceBetween: 15,
+                slidesPerView: 1,
+                spaceBetween: 20,
                 speed: 300,
             },
             // Tablet (768px and up): 2 slides
@@ -261,39 +292,45 @@ document.addEventListener('DOMContentLoaded', function() {
             loop: true,
             speed: 400,
             autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            // Enable bottom pagination bullets
+            pagination: {
+                el: '.product-hero-swiper .swiper-pagination',
+                clickable: true,
+            },
         });
 
-        // Thumbnails click to navigate + active highlighting
+        // If thumbnail strip exists, keep its behavior; otherwise skip
         const thumbs = document.querySelectorAll('.thumbs-strip img[data-index]');
+        if (thumbs.length) {
+            const setActiveThumb = (idx) => {
+                thumbs.forEach((t, i) => {
+                    if (i === idx) t.classList.add('active');
+                    else t.classList.remove('active');
+                });
+            };
 
-        const setActiveThumb = (idx) => {
-            thumbs.forEach((t, i) => {
-                if (i === idx) t.classList.add('active');
-                else t.classList.remove('active');
+            // init active state
+            setActiveThumb(heroSwiper.realIndex || 0);
+
+            // sync on swiper slide change
+            heroSwiper.on('slideChange', () => {
+                setActiveThumb(heroSwiper.realIndex);
             });
-        };
 
-        // init active state
-        setActiveThumb(heroSwiper.realIndex || 0);
-
-        // sync on swiper slide change
-        heroSwiper.on('slideChange', () => {
-            setActiveThumb(heroSwiper.realIndex);
-        });
-
-        // click to navigate and set active
-        thumbs.forEach(thumb => {
-            thumb.addEventListener('click', () => {
-                const idx = parseInt(thumb.getAttribute('data-index'), 10);
-                if (!Number.isNaN(idx)) {
-                    heroSwiper.slideTo(idx);
-                    setActiveThumb(idx);
-                }
+            // click to navigate and set active
+            thumbs.forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    const idx = parseInt(thumb.getAttribute('data-index'), 10);
+                    if (!Number.isNaN(idx)) {
+                        heroSwiper.slideTo(idx);
+                        setActiveThumb(idx);
+                    }
+                });
             });
-        });
+        }
     }
 
     // ===== Trust Swiper (Vertical Badges) =====

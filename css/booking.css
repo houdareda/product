@@ -45,6 +45,65 @@
   margin: 0;
   font-size: 18px;
 }
+.booking-title-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.direct-booking-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #eef6ff;
+  color: #27496b;
+  border: 1px solid #d7e4f2;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.direct-booking-badge i {
+  color: var(--primary-color);
+  font-size: 16px;
+}
+.direct-booking-badge { position: relative; }
+.direct-booking-badge::after {
+  content: attr(aria-label);
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  background: #ffffff;
+  border: 1px solid #d7e4f2;
+  color: #27496b;
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 6px 8px;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  width: 200px;
+  white-space: normal;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .18s ease, transform .18s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+.direct-booking-badge:hover::after,
+.direct-booking-badge:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (max-width: 480px) {
+  .direct-booking-badge::after {
+    max-width: min(80vw, 260px);
+  }
+}
+@media (max-width: 480px) {
+  .direct-booking-badge {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+}
 .booking-modal-close {
   background: transparent;
   border: none;
@@ -58,7 +117,7 @@
 
 .booking-step {
   border: 1px solid #e6f5ed;
-  border-radius: 14px;
+  border-radius: 8px;
   padding: 12px;
   margin-bottom: 12px;
   background: #fff;
@@ -127,13 +186,13 @@
 /* Time options */
 .time-grid {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 .time-option {
   padding: 10px 14px;
   border: 1px solid #d1d5db;
-  border-radius: 22px;
+  border-radius: 8px;
   background: #fff;
   color: #111;
   cursor: pointer;
@@ -147,7 +206,7 @@
 /* Language options */
 .lang-grid {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 .lang-option {
@@ -156,7 +215,7 @@
   gap: 8px;
   padding: 8px 12px;
   border: 1px solid #d1d5db;
-  border-radius: 22px;
+  border-radius: 8px;
   background: #fff;
   color: #111;
   cursor: pointer;
@@ -204,8 +263,9 @@
   justify-content: space-between;
   padding: 8px;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: 5px;
   margin-bottom: 8px;
+  gap: 8px;
 }
 .counters .label {
   font-weight: 600;
@@ -216,7 +276,7 @@
   height: 34px;
   border-radius: 50%;
   border: 1px solid #cbd5e1;
-  background: #fff;
+  background: var(--bg-soft-color);
   color: #111;
   cursor: pointer;
   font-weight: bold;
@@ -227,10 +287,31 @@
 .counter-btn:active {
   transform: scale(0.98);
 }
+.counter-btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 .count {
   min-width: 30px;
   text-align: center;
   font-weight: 700;
+}
+
+/* Locked counter row when participants are restricted */
+.counter-locked {
+  opacity: 0.6;
+}
+
+/* Restriction note above counters */
+.restriction-note {
+  background: #fff8db;
+  color: #5c5c00;
+  border: 1px solid #f2e6a3;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 13px;
+  margin-bottom: 8px;
 }
 
 /* Addons */
@@ -240,7 +321,7 @@
   justify-content: space-between;
   padding: 8px;
   border: 1px dashed #e5e7eb;
-  border-radius: 12px;
+  border-radius: 8px;
   margin-bottom: 8px;
 }
 .addon-price {
@@ -265,6 +346,10 @@
   border-top: 1px solid #eee;
   padding: 12px;
   border-radius: 12px;
+}
+.booking-summary .flexible_secure{
+  font-size: 12px;
+  padding: 4px 0;
 }
 .summary-line {
   display: flex;
@@ -292,7 +377,7 @@
   gap: 8px;
   padding: 6px 8px;
   border: 1px dashed #e5e7eb;
-  border-radius: 8px;
+  border-radius: 5px;
   margin-bottom: 6px;
   background: var(--bg-soft-color);
 }
@@ -356,4 +441,11 @@ color: var(--primary-color);
 .lead.text-muted {
     font-weight: 400;
     font-size: 14px;
+}
+
+
+@media (min-width:1000px) {
+  section.product-card-section{
+    padding-top: 100px;
+  }
 }
